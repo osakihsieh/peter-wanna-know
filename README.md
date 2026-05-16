@@ -21,8 +21,9 @@ This README tracks the current v3 pipeline. The runtime skill spec lives in [SKI
 
 **Codex, Cursor, Copilot, Gemini CLI, or any of 50+ [Agent Skills](https://agentskills.io) hosts:**
 ```
-npx skills add mvanhorn/last30days-skill
+npx skills add mvanhorn/last30days-skill -g
 ```
+(`-g` installs globally for your user, available across all projects. Drop it to scope per-project.)
 
 More install options (claude.ai web, OpenClaw, manual) in the [Install](#install) section below.
 
@@ -167,7 +168,7 @@ Say "eli5 on" after any research run. The synthesis rewrites in plain language. 
 | Surface | Install | Updates |
 |---------|---------|---------|
 | **Claude Code** (recommended) | `/plugin marketplace add mvanhorn/last30days-skill` | Auto via marketplace, or `claude plugin update last30days@last30days-skill` |
-| **Codex, Cursor, Copilot, Gemini CLI, GitHub Copilot, or any of 50+ [Agent Skills](https://agentskills.io) hosts** | `npx skills add mvanhorn/last30days-skill` | `npx skills update last30days` |
+| **Codex, Cursor, Copilot, Gemini CLI, GitHub Copilot, or any of 50+ [Agent Skills](https://agentskills.io) hosts** | `npx skills add mvanhorn/last30days-skill -g` | `npx skills update last30days -g` |
 | **claude.ai** (web) | [Download `last30days.skill`](https://github.com/mvanhorn/last30days-skill/releases/latest/download/last30days.skill) and upload via Settings > Capabilities > Skills > + | Re-download and re-upload |
 | **OpenClaw** | `clawhub install last30days-official` | `clawhub update last30days-official` |
 
@@ -182,7 +183,7 @@ Recommended because the Claude Code marketplace handles updates for you — the 
 If you'd rather use the agent-skills install path on Claude Code, that's also supported:
 
 ```
-npx skills add mvanhorn/last30days-skill -a claude-code
+npx skills add mvanhorn/last30days-skill -g -a claude-code
 ```
 
 The native plugin and the `npx skills` install can coexist; Claude Code dedupes the slash command.
@@ -192,31 +193,33 @@ The native plugin and the `npx skills` install can coexist; Claude Code dedupes 
 Install via the open [Agent Skills](https://agentskills.io) CLI — supports 50+ harnesses including `codex`, `cursor`, `github-copilot`, `gemini-cli`, `claude-code`, `windsurf`, `cline`, `continue`, `roo`, `aider-desk`, `opencode`, `goose`, and more (full list on the [vercel-labs/skills repo](https://github.com/vercel-labs/skills)).
 
 ```bash
-npx skills add mvanhorn/last30days-skill
+npx skills add mvanhorn/last30days-skill -g
 ```
 
-By default this installs for whichever harness it detects. To target a specific one (or multiple):
+The `-g` (global) flag installs to your user directory so the skill is available across all projects. Without `-g`, `npx skills` installs project-locally into `./.skills/` (committed with the repo). For a research-the-world tool, global is what you want.
+
+By default this installs for whichever harness `npx skills` detects. To target a specific one (or multiple):
 
 ```bash
-npx skills add mvanhorn/last30days-skill -a codex
-npx skills add mvanhorn/last30days-skill -a cursor
-npx skills add mvanhorn/last30days-skill -a gemini-cli
-npx skills add mvanhorn/last30days-skill -a codex -a cursor
+npx skills add mvanhorn/last30days-skill -g -a codex
+npx skills add mvanhorn/last30days-skill -g -a cursor
+npx skills add mvanhorn/last30days-skill -g -a gemini-cli
+npx skills add mvanhorn/last30days-skill -g -a codex -a cursor
 ```
 
 Update later with:
 
 ```bash
-npx skills update last30days
+npx skills update last30days -g
 ```
 
-Or update everything you've installed via `npx skills`:
+Or update everything you've installed globally via `npx skills`:
 
 ```bash
-npx skills update
+npx skills update -g
 ```
 
-List and remove with `npx skills list` and `npx skills remove last30days`.
+List and remove with `npx skills list -g` and `npx skills remove last30days -g`.
 
 ### claude.ai (web)
 
