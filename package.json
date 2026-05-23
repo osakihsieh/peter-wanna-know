@@ -2,7 +2,7 @@
   "name": "peter-wanna-know",
   "version": "3.3.0",
   "description": "Peter Wanna Know: 深度研究過去 30 天內社群（Reddit, X, PTT, Dcard, YouTube, GitHub 等）的真實動態與風向。",
-  "main": "skills/peter-wanna-know",
+
   "scripts": {
     "test": "uv run pytest",
     "add": "npx skills add . -g -y"
