@@ -39,6 +39,8 @@ def normalize_source_items(
     normalizers = {
         "reddit": _normalize_reddit,
         "x": _normalize_x,
+        "ptt": _normalize_grounding,
+        "dcard": _normalize_grounding,
         "youtube": _normalize_youtube,
         "tiktok": lambda s, i, idx, fd, td: _normalize_shortform_video(s, i, idx, fd, td, "TK", "TikTok post"),
         "instagram": lambda s, i, idx, fd, td: _normalize_shortform_video(s, i, idx, fd, td, "IG", "Instagram reel"),

@@ -1,8 +1,8 @@
 ---
-name: last30days
+name: peter-wanna-know
 version: "3.3.0"
-description: "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web."
-argument-hint: 'last30days nvidia earnings reaction | last30days AI video tools | last30days what users want in react'
+description: "Peter Wanna Know: 深度研究過去 30 天內社群（Reddit, X, PTT, Dcard, YouTube, GitHub 等）的真實動態與風向。"
+argument-hint: 'peter-wanna-know nvidia 營收反應 | peter-wanna-know 台股風向 | peter-wanna-know 最新的 AI 影片工具'
 allowed-tools: Bash, Read, Write, AskUserQuestion, WebSearch
 homepage: https://github.com/mvanhorn/last30days-skill
 repository: https://github.com/mvanhorn/last30days-skill
@@ -41,6 +41,8 @@ metadata:
       - x
       - twitter
       - youtube
+      - ptt
+      - dcard
       - tiktok
       - instagram
       - hackernews

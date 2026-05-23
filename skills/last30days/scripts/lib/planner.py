@@ -19,24 +19,24 @@ ALLOWED_INTENTS = {
 }
 ALLOWED_CLUSTER_MODES = {"none", "story", "workflow", "market", "debate"}
 QUICK_SOURCE_PRIORITY = {
-    "factual": ["hackernews", "reddit", "x", "xquik", "youtube"],
-    "product": ["youtube", "reddit", "x", "xquik", "tiktok"],
-    "concept": ["hackernews", "reddit", "x", "xquik", "youtube"],
-    "opinion": ["reddit", "x", "xquik", "youtube", "hackernews"],
-    "how_to": ["youtube", "reddit", "x", "xquik", "hackernews"],
-    "comparison": ["reddit", "x", "xquik", "hackernews", "youtube"],
-    "breaking_news": ["x", "xquik", "reddit", "hackernews", "youtube", "polymarket"],
-    "prediction": ["polymarket", "x", "xquik", "hackernews", "reddit", "youtube"],
+    "factual": ["hackernews", "reddit", "x", "xquik", "ptt", "dcard", "youtube"],
+    "product": ["youtube", "reddit", "x", "xquik", "dcard", "ptt", "tiktok"],
+    "concept": ["hackernews", "reddit", "x", "xquik", "ptt", "youtube"],
+    "opinion": ["reddit", "x", "xquik", "ptt", "dcard", "youtube", "hackernews"],
+    "how_to": ["youtube", "reddit", "x", "xquik", "ptt", "dcard", "hackernews"],
+    "comparison": ["reddit", "x", "xquik", "ptt", "dcard", "hackernews", "youtube"],
+    "breaking_news": ["x", "xquik", "reddit", "ptt", "dcard", "hackernews", "youtube", "polymarket"],
+    "prediction": ["polymarket", "x", "xquik", "hackernews", "reddit", "ptt", "youtube"],
 }
 SOURCE_PRIORITY = {
-    "factual": ["hackernews", "reddit", "x", "youtube"],
-    "product": ["youtube", "reddit", "x", "tiktok", "hackernews"],
-    "concept": ["hackernews", "reddit", "x", "youtube"],
-    "opinion": ["reddit", "x", "youtube", "hackernews"],
-    "how_to": ["youtube", "reddit", "x", "hackernews"],
-    "comparison": ["reddit", "x", "hackernews", "youtube"],
-    "breaking_news": ["x", "reddit", "hackernews", "youtube", "polymarket"],
-    "prediction": ["polymarket", "x", "hackernews", "reddit", "youtube"],
+    "factual": ["hackernews", "reddit", "x", "ptt", "dcard", "youtube"],
+    "product": ["youtube", "reddit", "x", "dcard", "ptt", "tiktok", "hackernews"],
+    "concept": ["hackernews", "reddit", "x", "ptt", "youtube"],
+    "opinion": ["reddit", "x", "ptt", "dcard", "youtube", "hackernews"],
+    "how_to": ["youtube", "reddit", "x", "ptt", "dcard", "hackernews"],
+    "comparison": ["reddit", "x", "ptt", "dcard", "hackernews", "youtube"],
+    "breaking_news": ["x", "reddit", "ptt", "dcard", "hackernews", "youtube", "polymarket"],
+    "prediction": ["polymarket", "x", "hackernews", "reddit", "ptt", "youtube"],
 }
 SOURCE_LIMITS = {
     "quick": {
@@ -72,6 +72,8 @@ SOURCE_CAPABILITIES = {
     "xiaohongshu": {"video", "video_shortform", "social"},
     "github": {"discussion", "link"},
     "grounding": {"web", "reference", "link"},
+    "ptt": {"discussion", "social"},
+    "dcard": {"discussion", "social"},
     "perplexity": {"web", "reference", "analysis"},
 }
 DEFAULT_INTENT_CAPABILITIES = {

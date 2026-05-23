@@ -13,6 +13,7 @@ from typing import Any
 from . import (
     bird_x,
     bluesky,
+    dcard,
     dates,
     dedupe,
     digg,
@@ -28,6 +29,7 @@ from . import (
     planner,
     polymarket,
     providers,
+    ptt,
     query,
     reddit,
     reddit_public,
@@ -69,6 +71,8 @@ MOCK_AVAILABLE_SOURCES = [
     "reddit",
     "x",
     "youtube",
+    "ptt",
+    "dcard",
     "tiktok",
     "instagram",
     "hackernews",
@@ -101,6 +105,11 @@ def available_sources(config: dict[str, Any], requested_sources: list[str] | Non
     available: list[str] = []
     # reddit_public needs no API key - always available
     available.append("reddit")
+    # PTT and Dcard: always available via web search if any web key is present
+    has_web = config.get("BRAVE_API_KEY") or config.get("EXA_API_KEY") or config.get("SERPER_API_KEY") or config.get("PARALLEL_API_KEY")
+    if has_web:
+        available.extend(["ptt", "dcard"])
+
     if config.get("SCRAPECREATORS_API_KEY"):
         available.extend(["tiktok", "instagram"])
     if env.get_x_source(config):
@@ -869,6 +878,10 @@ def _retrieve_stream(
     if source == "grounding":
         return grounding.web_search(
             subquery.search_query, date_range, config, backend=web_backend)
+    if source == "ptt":
+        return ptt.search_ptt(subquery.search_query, date_range, config, depth=depth, web_backend=web_backend), {}
+    if source == "dcard":
+        return dcard.search_dcard(subquery.search_query, date_range, config, depth=depth, web_backend=web_backend), {}
     if source == "reddit":
         # Use raw_topic so expand_reddit_queries() generates diverse variants
         # from the original user topic, not the planner's narrowed search_query.

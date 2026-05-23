@@ -64,6 +64,8 @@ def _render_badge() -> list[str]:
 SOURCE_LABELS = {
     "grounding": "Web",
     "hackernews": "Hacker News",
+    "ptt": "PTT",
+    "dcard": "Dcard",
     "truthsocial": "Truth Social",
     "xiaohongshu": "Xiaohongshu",
     "x": "X",
