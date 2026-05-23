@@ -1,11 +1,11 @@
 ---
-name: last30days
+name: peter-wanna-know
 description: Research a topic from the last 30 days on Reddit + X + Web, become an expert, and write copy-paste-ready prompts for the user's target tool.
 argument-hint: '"[topic] for [tool]" or "[topic]"'
 allowed-tools: Bash, Read, Write, AskUserQuestion, WebSearch
 ---
 
-# last30days: Research Any Topic from the Last 30 Days
+# peter-wanna-know: Research Any Topic from the Last 30 Days
 
 Research ANY topic across Reddit, X, and the web. Surface what people are actually discussing, recommending, and debating right now.
 
@@ -58,7 +58,7 @@ This text MUST appear before you call any tools. It confirms to the user that yo
 
 **Step 1: Run the research script**
 ```bash
-python3 ~/.claude/skills/last30days/scripts/last30days.py "$ARGUMENTS" --emit=compact 2>&1
+python3 ~/.claude/skills/peter-wanna-know/scripts/peter-wanna-know.py "$ARGUMENTS" --emit=compact 2>&1
 ```
 
 The script will automatically:

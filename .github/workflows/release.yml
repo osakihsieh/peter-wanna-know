@@ -19,13 +19,13 @@ jobs:
 
       - name: Build .skill artifact
         run: |
-          bash skills/last30days/scripts/build-skill.sh
-          test -f dist/last30days.skill
+          bash skills/peter-wanna-know/scripts/build-skill.sh
+          test -f dist/peter-wanna-know.skill
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/last30days.skill
+          files: dist/peter-wanna-know.skill
           generate_release_notes: true
           draft: false
           prerelease: false

@@ -1,6 +1,6 @@
 ---
 
-> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/last30days-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
+> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/peter-wanna-know-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
 
 title: "feat: --competitors flag for auto-discovered comparison fan-out"
 type: feat
@@ -12,7 +12,7 @@ date: 2026-04-22
 
 ## Overview
 
-Add a `--competitors` flag to the last30days engine that auto-discovers 2-4 peer entities for the topic, runs the full retrieval pipeline on each in parallel, and renders a multi-entity comparison. Invoking `last30days Kanye West --competitors` should resolve to "Kanye vs Drake vs Kendrick Lamar" and emit a comparison report covering all three. Invoking `last30days OpenAI --competitors` should resolve to "OpenAI vs Anthropic vs xAI vs Gemini" and emit a four-way comparison.
+Add a `--competitors` flag to the peter-wanna-know engine that auto-discovers 2-4 peer entities for the topic, runs the full retrieval pipeline on each in parallel, and renders a multi-entity comparison. Invoking `peter-wanna-know Kanye West --competitors` should resolve to "Kanye vs Drake vs Kendrick Lamar" and emit a comparison report covering all three. Invoking `peter-wanna-know OpenAI --competitors` should resolve to "OpenAI vs Anthropic vs xAI vs Gemini" and emit a four-way comparison.
 
 Discovery mirrors the existing `resolve.auto_resolve()` pattern used for X handles and subreddits at pipeline start — web search (Brave / Exa / Serper) plus deterministic extraction. Not an internal LLM call.
 
@@ -50,7 +50,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 
 ### Relevant Code and Patterns
 
-- `scripts/last30days.py:168-249` — `build_parser()` argparse definitions. Existing depth flags (`--quick`, `--deep`) and override flags (`--plan`, `--subreddits`, `--x-handle`, `--auto-resolve`) set the convention to mirror.
+- `scripts/peter-wanna-know.py:168-249` — `build_parser()` argparse definitions. Existing depth flags (`--quick`, `--deep`) and override flags (`--plan`, `--subreddits`, `--x-handle`, `--auto-resolve`) set the convention to mirror.
 - `scripts/lib/resolve.py:179-258` — `auto_resolve()` is the reference pattern: web search fan-out via `ThreadPoolExecutor`, per-query extraction functions, graceful empty-dict return when no backend is available.
 - `scripts/lib/resolve.py:98-140` — `_extract_x_handle()` and sibling extractors show the deterministic text-mining style competitor extraction should mirror.
 - `scripts/lib/pipeline.py:162-220` — `pipeline.run()` signature is the fan-out target. One call per entity, each returning a `schema.Report`.
@@ -70,7 +70,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 ## Key Technical Decisions
 
 - **Discovery mirrors auto_resolve, not plan_query.** Web search + regex extraction, not an LLM call. Matches the user's explicit direction ("use the python brain the same way it searches for X handles"). Cheaper, no provider credential requirement, deterministic.
-- **Orchestration lives in `last30days.py` main, not inside `pipeline.run()`.** The fan-out is a top-level concern — one pipeline run per entity, each independent. Keeps `pipeline.run()` single-entity and unchanged except for sharing a `ThreadPoolExecutor` factory.
+- **Orchestration lives in `peter-wanna-know.py` main, not inside `pipeline.run()`.** The fan-out is a top-level concern — one pipeline run per entity, each independent. Keeps `pipeline.run()` single-entity and unchanged except for sharing a `ThreadPoolExecutor` factory.
 - **Sub-runs inherit main depth and run in parallel.** Wall clock ≈ single run; token cost scales linearly with N. User-controlled via the existing `--quick`/`--deep` flags.
 - **New module `scripts/lib/competitors.py` instead of adding to `resolve.py`.** Keeps resolve focused on single-entity entity-bundle discovery (handles/subreddits/github); competitors.py owns peer-entity discovery. Similar shape, different responsibility.
 - **Multi-report render is additive in `render.py`.** New `render_comparison_multi(reports: list[Report]) -> str` composes a synthetic "A vs B vs C" topic and delegates to the existing scaffold + synthesis path where possible. No rewrite of the single-entity render path.
@@ -104,7 +104,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py`
+- Modify: `scripts/peter-wanna-know.py`
 - Test: `tests/test_cli_competitors.py`
 
 **Approach:**
@@ -115,8 +115,8 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 - Thread the resulting entity list into the orchestrator added in Unit 3.
 
 **Patterns to follow:**
-- `--plan` argument at `scripts/last30days.py:187` — same skip-discovery-when-explicit shape.
-- `--subreddits` / `--x-handle` at `scripts/last30days.py:180,189` — same override semantics.
+- `--plan` argument at `scripts/peter-wanna-know.py:187` — same skip-discovery-when-explicit shape.
+- `--subreddits` / `--x-handle` at `scripts/peter-wanna-know.py:180,189` — same override semantics.
 
 **Test scenarios:**
 - Happy path: bare `--competitors` parses to count=3, empty list.
@@ -182,7 +182,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 **Dependencies:** Unit 1, Unit 2
 
 **Files:**
-- Modify: `scripts/last30days.py`
+- Modify: `scripts/peter-wanna-know.py`
 - Possibly create: `scripts/lib/fanout.py` if the orchestrator grows past ~60 lines
 - Test: `tests/test_competitor_fanout.py`
 
@@ -275,7 +275,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 
 ## System-Wide Impact
 
-- **Interaction graph:** `last30days.py main()` now orchestrates multiple `pipeline.run()` calls instead of one. No other callers of `pipeline.run()` are affected (it remains single-entity).
+- **Interaction graph:** `peter-wanna-know.py main()` now orchestrates multiple `pipeline.run()` calls instead of one. No other callers of `pipeline.run()` are affected (it remains single-entity).
 - **Error propagation:** Per-entity failures degrade gracefully as long as ≥2 entities survive; fewer survivors exits non-zero. Discovery failure with `--competitors` and no list is fatal.
 - **State lifecycle risks:** Each sub-run uses its own `pipeline.run()` state; no shared mutable config. The `config` dict is read-only in `pipeline.run()` today — verify before committing to shared-reference passing, else deep-copy per sub-run.
 - **API surface parity:** `--competitors` coexists with the existing explicit "A vs B vs C" topic parsing in `planner._comparison_entities()`. Both produce comparable output formats; the only difference is where the entity list came from.
@@ -295,7 +295,7 @@ This is also the natural next step after the Step 0.55 category-peer subreddit w
 
 ## Documentation / Operational Notes
 
-- Beta channel first: per `CLAUDE.md`, experimental changes go to `mvanhorn/last30days-skill-private` on the `/last30days-beta` command. Land this on the private repo first, shake out on real topics for a day or two, then cherry-pick to public.
+- Beta channel first: per `CLAUDE.md`, experimental changes go to `mvanhorn/peter-wanna-know-skill-private` on the `/peter-wanna-know-beta` command. Land this on the private repo first, shake out on real topics for a day or two, then cherry-pick to public.
 - After land-merge: run `scripts/sync.sh` to deploy SKILL.md + scripts to `~/.claude/`, `~/.agents/`, `~/.codex/`.
 - Release notes entry in CHANGELOG.md follows the v3.0.9 voice — outcome-first, one paragraph.
 

@@ -1,9 +1,9 @@
-# How Reddit & X Search Work in last30days
+# How Reddit & X Search Work in peter-wanna-know
 
 ## Architecture Overview
 
 ```
-User: /last30days "kanye west"
+User: /peter-wanna-know "kanye west"
           ↓
     ┌─────┴─────┐
     ↓           ↓           (concurrent via ThreadPoolExecutor)
@@ -183,14 +183,14 @@ After both searches complete:
 
 | File | Purpose |
 |---|---|
-| `skills/last30days/scripts/last30days.py` | Main CLI entry point |
-| `skills/last30days/scripts/lib/pipeline.py` | Multi-source retrieval orchestration |
-| `skills/last30days/scripts/lib/reddit_public.py` | Reddit public JSON search |
-| `skills/last30days/scripts/lib/reddit_enrich.py` | Fetch real engagement data from Reddit JSON API |
-| `skills/last30days/scripts/lib/xai_x.py` | X search via xAI API |
-| `skills/last30days/scripts/lib/bird_x.py` | X search via bundled Bird client (free) |
-| `skills/last30days/scripts/lib/providers.py` | Reasoning provider and model selection |
-| `skills/last30days/scripts/lib/env.py` | API key loading, source detection |
-| `skills/last30days/scripts/lib/http.py` | HTTP transport with retries |
-| `skills/last30days/scripts/lib/relevance.py` | Query matching and relevance scoring |
-| `skills/last30days/scripts/lib/dedupe.py` | URL-based deduplication |
+| `skills/peter-wanna-know/scripts/peter-wanna-know.py` | Main CLI entry point |
+| `skills/peter-wanna-know/scripts/lib/pipeline.py` | Multi-source retrieval orchestration |
+| `skills/peter-wanna-know/scripts/lib/reddit_public.py` | Reddit public JSON search |
+| `skills/peter-wanna-know/scripts/lib/reddit_enrich.py` | Fetch real engagement data from Reddit JSON API |
+| `skills/peter-wanna-know/scripts/lib/xai_x.py` | X search via xAI API |
+| `skills/peter-wanna-know/scripts/lib/bird_x.py` | X search via bundled Bird client (free) |
+| `skills/peter-wanna-know/scripts/lib/providers.py` | Reasoning provider and model selection |
+| `skills/peter-wanna-know/scripts/lib/env.py` | API key loading, source detection |
+| `skills/peter-wanna-know/scripts/lib/http.py` | HTTP transport with retries |
+| `skills/peter-wanna-know/scripts/lib/relevance.py` | Query matching and relevance scoring |
+| `skills/peter-wanna-know/scripts/lib/dedupe.py` | URL-based deduplication |

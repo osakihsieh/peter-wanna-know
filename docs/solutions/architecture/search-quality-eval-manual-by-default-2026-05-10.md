@@ -2,7 +2,7 @@
 title: Search-quality eval is manual by default, not a CI gate on every PR
 date: 2026-05-10
 category: docs/solutions/architecture
-module: skills/last30days/scripts/evaluate_search_quality.py
+module: skills/peter-wanna-know/scripts/evaluate_search_quality.py
 problem_type: design_decision
 component: ci_policy
 severity: low
@@ -27,7 +27,7 @@ tags:
 
 ## Context
 
-`skills/last30days/scripts/evaluate_search_quality.py` compares a baseline revision against a candidate revision across a fixed pool of reviewer topics. It produces two flavors of metrics: deterministic overlap (Jaccard, retention) and LLM-judged quality scores. The natural impulse on seeing an evaluator script is to wire it into CI on every PR — "regression catcher, run it automatically." We deliberately don't.
+`skills/peter-wanna-know/scripts/evaluate_search_quality.py` compares a baseline revision against a candidate revision across a fixed pool of reviewer topics. It produces two flavors of metrics: deterministic overlap (Jaccard, retention) and LLM-judged quality scores. The natural impulse on seeing an evaluator script is to wire it into CI on every PR — "regression catcher, run it automatically." We deliberately don't.
 
 Three properties of this particular evaluator make CI-on-every-PR the wrong default:
 
@@ -47,7 +47,7 @@ The script stays runnable by maintainers and contributors. The pattern is:
 
 ```bash
 LAST30DAYS_PYTHON=python3.13 \
-  python3 skills/last30days/scripts/evaluate_search_quality.py \
+  python3 skills/peter-wanna-know/scripts/evaluate_search_quality.py \
   --baseline main --candidate HEAD
 ```
 
@@ -73,10 +73,10 @@ The blocker is the live-API + non-determinism combination. If a future iteration
 
 ## Links
 
-- `skills/last30days/scripts/evaluate_search_quality.py` — the evaluator script
+- `skills/peter-wanna-know/scripts/evaluate_search_quality.py` — the evaluator script
 - `docs/search-quality-eval.md` — user-facing usage documentation
 - `.github/workflows/validate.yml` — the default CI workflow (deterministic gates only)
 
 ---
 
-*Adapted from a draft ADR proposed by @hnshah in [#374](https://github.com/mvanhorn/last30days-skill/pull/374), restructured into the `docs/solutions/` convention. The original ADR text correctly identified the constraint; this version adds the "why workflow_dispatch is the middle ground" framing and the revisit-condition.*
+*Adapted from a draft ADR proposed by @hnshah in [#374](https://github.com/mvanhorn/peter-wanna-know-skill/pull/374), restructured into the `docs/solutions/` convention. The original ADR text correctly identified the constraint; this version adds the "why workflow_dispatch is the middle ground" framing and the revisit-condition.*

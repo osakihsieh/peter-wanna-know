@@ -1,16 +1,16 @@
 ---
-title: "fix: --competitors runs a full last30days per entity with hosting-model pre-resolve"
+title: "fix: --competitors runs a full peter-wanna-know per entity with hosting-model pre-resolve"
 type: fix
 status: active
 date: 2026-04-22
 origin: docs/plans/2026-04-22-003-fix-competitors-per-entity-resolution-plan.md
 ---
 
-# fix: --competitors runs a full last30days per entity with hosting-model pre-resolve
+# fix: --competitors runs a full peter-wanna-know per entity with hosting-model pre-resolve
 
 ## Overview
 
-User intent confirmed 2026-04-22: `--competitors` should run a full single-entity `last30days` pipeline for the main topic AND for each discovered peer — three independent full-depth passes, each with its own Step 0.55 resolution, own X handle primary weight, own subreddit targeting, own GitHub repo scoping. Then merge them into the comparison output.
+User intent confirmed 2026-04-22: `--competitors` should run a full single-entity `peter-wanna-know` pipeline for the main topic AND for each discovered peer — three independent full-depth passes, each with its own Step 0.55 resolution, own X handle primary weight, own subreddit targeting, own GitHub repo scoping. Then merge them into the comparison output.
 
 3.0.12 already built the N-parallel-pipelines orchestration (`scripts/lib/fanout.py`). What it got wrong: it tried to do per-entity Step 0.55 engine-side via `resolve.auto_resolve()`, which requires a web search backend key (BRAVE/EXA/SERPER/PARALLEL/OPENROUTER). Matt runs from Claude Code, which has its own WebSearch tool. The engine has none of those keys, so per-entity auto_resolve silently no-ops and all peer sub-runs fall through to deterministic single-word planner queries.
 
@@ -51,7 +51,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - R4. Footer nudge `💡 You can unlock native grounded web search with BRAVE_API_KEY...` is suppressed when `--plan` OR `--competitors-plan` was passed. Signal: hosting model is driving and already has WebSearch.
 - R5. Override-leak fix: competitor sub-runs do not inherit main topic's `--subreddits`, `--x-handle`, `--x-related`, `--tiktok-hashtags`, `--tiktok-creators`, `--ig-creators`, `--github-user`, `--github-repo`. Sub-runs use only their own per-entity targeting (from `--competitors-plan` if provided, else engine-internal auto_resolve if backend, else planner defaults).
 - R6. The `## Resolved Entities` block is also appended to the saved raw file when `--save-dir` is in use. Each entity's effective targeting (whatever was actually passed to its `pipeline.run()`) is visible on audit.
-- R6b. When `--save-dir` is in use with a comparison run, each entity's sub-run ALSO saves its own standalone raw file — same format as a single-entity run. `/last30days Kanye West --competitors` produces `kanye-west-raw.md`, `drake-raw.md`, `kendrick-lamar-raw.md` (one per entity) plus the merged comparison file. Matches the historical vs-mode behavior when it ran as N passes.
+- R6b. When `--save-dir` is in use with a comparison run, each entity's sub-run ALSO saves its own standalone raw file — same format as a single-entity run. `/peter-wanna-know Kanye West --competitors` produces `kanye-west-raw.md`, `drake-raw.md`, `kendrick-lamar-raw.md` (one per entity) plus the merged comparison file. Matches the historical vs-mode behavior when it ran as N passes.
 - R7. Polymarket disambiguation: support `--polymarket-keywords "kw1,kw2"` to filter market matches; auto-skip Polymarket when topic is single-token-ambiguous and no override is provided.
 - R8. Default `--competitors` count remains 2 (3-way: main + 2 peers). Unchanged from 3.0.12.
 
@@ -71,12 +71,12 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 
 ### Relevant Code and Patterns
 
-- `scripts/last30days.py` — `--competitors` / `--competitors-list` argparse block, `resolve_competitors_args` validator, `_main_runner` closure, `_competitor_runner` closure, the `[Competitors] --competitors requires...` stderr block. Primary file for this plan.
+- `scripts/peter-wanna-know.py` — `--competitors` / `--competitors-list` argparse block, `resolve_competitors_args` validator, `_main_runner` closure, `_competitor_runner` closure, the `[Competitors] --competitors requires...` stderr block. Primary file for this plan.
 - `scripts/lib/fanout.py` — `run_competitor_fanout` orchestrator. Signature unchanged; `_competitor_runner` closure now builds kwargs from `--competitors-plan`.
 - `scripts/lib/pipeline.py` — `pipeline.run()` signature; no changes required (all per-entity flags already exist as kwargs).
 - `scripts/lib/planner.py` — existing `--plan` parsing and validation, pattern to mirror for `--competitors-plan`.
 - `scripts/lib/render.py` `_render_resolved_entities_block` (added in 3.0.12) — already reads `report.artifacts["resolved"]`; no change needed.
-- `scripts/last30days.py` `save_output` / `render.render_full` — the save path. Needs to include the Resolved Entities block for comparison runs.
+- `scripts/peter-wanna-know.py` `save_output` / `render.render_full` — the save path. Needs to include the Resolved Entities block for comparison runs.
 - `scripts/lib/quality_nudge.py` — where the BRAVE/SERPER footer nudge is emitted. Needs a context-aware suppression check.
 - `scripts/lib/polymarket.py` — source adapter. Entry point for `--polymarket-keywords` filter and single-token-ambiguous auto-skip.
 
@@ -85,7 +85,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - 3.0.11 plan (`2026-04-22-002`): built the initial fanout, deferred per-entity resolve as "v1 simplification."
 - 3.0.12 plan (`2026-04-22-003`): tried to close the gap via engine-internal `auto_resolve`. Works only with backend keys. Fails silently without.
 - 2026-04-22 test session receipts: confirmed all four fixes in this plan are real, reproducible bugs.
-- User's architectural steer 2026-04-22: "runs a full last30days on all 3 topics" — this plan encodes that explicitly as N full `pipeline.run()` calls with pre-resolved targeting per entity.
+- User's architectural steer 2026-04-22: "runs a full peter-wanna-know on all 3 topics" — this plan encodes that explicitly as N full `pipeline.run()` calls with pre-resolved targeting per entity.
 
 ### External References
 
@@ -127,7 +127,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py` (argparse + parse + `_competitor_runner`)
+- Modify: `scripts/peter-wanna-know.py` (argparse + parse + `_competitor_runner`)
 - Possibly modify: `scripts/lib/fanout.py` (no signature change expected; verify)
 - Test: `tests/test_cli_competitors.py` (extend)
 - Test: `tests/test_competitors_plan_threading.py` (new)
@@ -148,7 +148,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 **Execution note:** Test-first for the override-leak regression (pass `--subreddits=A,B` on main + a peer, assert peer's `pipeline.run(subreddits=...)` is None or peer-specific).
 
 **Patterns to follow:**
-- `--plan` parsing at `scripts/last30days.py` (inline JSON or file path).
+- `--plan` parsing at `scripts/peter-wanna-know.py` (inline JSON or file path).
 - 3.0.12's `_competitor_runner` closure for scope; extract the kwargs-build into `_subrun_kwargs` helper.
 - `entity_config = dict(config)` deep-copy pattern from 3.0.12.
 
@@ -179,7 +179,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 **Dependencies:** Unit 1 (flag must exist)
 
 **Files:**
-- Modify: `scripts/last30days.py` (the existing `[Competitors] --competitors requires...` block)
+- Modify: `scripts/peter-wanna-know.py` (the existing `[Competitors] --competitors requires...` block)
 - Test: `tests/test_competitors_no_backend_message.py` (new)
 
 **Approach:**
@@ -235,7 +235,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 **Dependencies:** Unit 1
 
 **Files:**
-- Modify: `scripts/last30days.py` (`save_output`, the save loop after fanout completes)
+- Modify: `scripts/peter-wanna-know.py` (`save_output`, the save loop after fanout completes)
 - Possibly modify: `scripts/lib/render.py` (`render_full` branch to include Resolved block when artifact is present)
 - Test: `tests/test_save_raw_competitor_files.py` (new)
 
@@ -248,7 +248,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - Single-entity runs unchanged (no additional files, no block change).
 
 **Patterns to follow:**
-- Existing `save_output` invocation for single-entity runs (line 501 of current `scripts/last30days.py`).
+- Existing `save_output` invocation for single-entity runs (line 501 of current `scripts/peter-wanna-know.py`).
 - Existing slug generation (`slugify(topic)`) for filename consistency.
 - `_render_resolved_entities_block` from 3.0.12 for the single-entity variant.
 
@@ -259,10 +259,10 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - Edge case: entity slug collides with existing file → overwrite (matches single-entity behavior).
 - Edge case: `--save-suffix=v3` → all 3 files get the suffix (`kanye-west-raw-v3.md`, `drake-raw-v3.md`, `kendrick-lamar-raw-v3.md`).
 - Edge case: comparison run with one peer whose sub-run failed → that entity's file is NOT saved; others are.
-- Integration: stderr after save shows three `[last30days] Saved output to <path>` lines, one per entity.
+- Integration: stderr after save shows three `[peter-wanna-know] Saved output to <path>` lines, one per entity.
 
 **Verification:**
-- After `/last30days Kanye West --competitors-list "Drake,Kendrick Lamar" --save-dir=/tmp/x`: `ls /tmp/x/*-raw.md` shows 3 files. Each contains its entity's Resolved block.
+- After `/peter-wanna-know Kanye West --competitors-list "Drake,Kendrick Lamar" --save-dir=/tmp/x`: `ls /tmp/x/*-raw.md` shows 3 files. Each contains its entity's Resolved block.
 
 - [ ] **Unit 5: SKILL.md "Competitor mode" rewrite — hosting-model Step 0.55 canonical**
 
@@ -297,7 +297,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - Test expectation: none — documentation. Verification is a fresh Claude Code window dogfood run.
 
 **Verification:**
-- `/last30days Kanye West --competitors` in a new window: hosting model does Step 0.55 for Kanye + 2 discovered peers; passes `--competitors-plan`; rendered Resolved block shows non-empty fields for all 3; top voices include at least one peer-specific handle.
+- `/peter-wanna-know Kanye West --competitors` in a new window: hosting model does Step 0.55 for Kanye + 2 discovered peers; passes `--competitors-plan`; rendered Resolved block shows non-empty fields for all 3; top voices include at least one peer-specific handle.
 
 - [ ] **Unit 6: Polymarket disambiguation guard**
 
@@ -308,7 +308,7 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py` argparse (`--polymarket-keywords`)
+- Modify: `scripts/peter-wanna-know.py` argparse (`--polymarket-keywords`)
 - Modify: `scripts/lib/polymarket.py`
 - Test: `tests/test_polymarket_disambiguation.py` (new)
 
@@ -343,12 +343,12 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - Modify: `.claude-plugin/plugin.json`
 - Modify: `CHANGELOG.md`
 - Run: `bash scripts/sync.sh`
-- Hot-copy: `~/.claude/plugins/cache/last30days-skill/last30days/3.0.13/`
+- Hot-copy: `~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.13/`
 
 **Approach:**
 - CHANGELOG entry groups the fixes: Added `--competitors-plan` JSON flag for per-entity hosting-model pre-resolve. Fixed override-leak from main into peer sub-runs. Changed: LAW 7 stderr framing for hosting-model context. Changed: BRAVE/SERPER footer nudge suppressed when `--plan` / `--competitors-plan` is present. Added: Resolved Entities block persists to saved raw file. Added: `--polymarket-keywords` + auto-skip for ambiguous single-token topics.
 - Beta channel first per CLAUDE.md.
-- Hot-copy so public `/last30days` picks up 3.0.13 immediately.
+- Hot-copy so public `/peter-wanna-know` picks up 3.0.13 immediately.
 
 **Test scenarios:**
 - Test expectation: none — packaging.
@@ -380,8 +380,8 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 
 ## Documentation / Operational Notes
 
-- Beta channel first per CLAUDE.md (private repo `/last30days-beta`).
-- After merge: hot-copy to `~/.claude/plugins/cache/last30days-skill/last30days/3.0.13/`.
+- Beta channel first per CLAUDE.md (private repo `/peter-wanna-know-beta`).
+- After merge: hot-copy to `~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.13/`.
 - CHANGELOG voice should call this out as the feedback-driven follow-up to 3.0.12. Reader should see "we tried engine-internal resolve in 3.0.12; it needs backend keys we don't have; we moved resolution to the hosting model in 3.0.13."
 
 ## Sources & References
@@ -390,5 +390,5 @@ This is the same pattern `--plan` already uses for the main topic: hosting model
 - Earlier plan (3.0.11): `docs/plans/2026-04-22-002-feat-competitors-flag-comparison-fanout-plan.md`
 - 2026-04-22 test session receipts: Warriors, Seattle, Arizona Wildcats, Kanye West
 - SKILL.md §551 "If QUERY_TYPE = COMPARISON" and §679 per-entity Step 0.55 protocol
-- Related code: `scripts/lib/fanout.py`, `scripts/last30days.py` `_competitor_runner`, `scripts/lib/render.py` `_render_resolved_entities_block`, `scripts/lib/polymarket.py`, `scripts/lib/quality_nudge.py`
+- Related code: `scripts/lib/fanout.py`, `scripts/peter-wanna-know.py` `_competitor_runner`, `scripts/lib/render.py` `_render_resolved_entities_block`, `scripts/lib/polymarket.py`, `scripts/lib/quality_nudge.py`
 - Related PRs: #308 (3.0.11), #309 (3.0.12)

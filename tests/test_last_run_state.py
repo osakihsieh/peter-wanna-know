@@ -8,10 +8,10 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-LAST30DAYS_SCRIPT = REPO_ROOT / "skills" / "last30days" / "scripts" / "last30days.py"
+LAST30DAYS_SCRIPT = REPO_ROOT / "skills" / "peter-wanna-know" / "scripts" / "peter-wanna-know.py"
 
 
-def run_last30days(topic: str, env: dict[str, str]) -> subprocess.CompletedProcess[str]:
+def run_peter-wanna-know(topic: str, env: dict[str, str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [sys.executable, str(LAST30DAYS_SCRIPT), topic, "--mock", "--emit=json"],
         cwd=REPO_ROOT,
@@ -30,10 +30,10 @@ class LastRunStateTests(unittest.TestCase):
             env["HOME"] = str(home)
             env["LAST30DAYS_CONFIG_DIR"] = ""
 
-            result = run_last30days("synthetic eval query", env)
+            result = run_peter-wanna-know("synthetic eval query", env)
 
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertFalse((home / ".config" / "last30days" / "last-run.json").exists())
+            self.assertFalse((home / ".config" / "peter-wanna-know" / "last-run.json").exists())
 
     def test_custom_config_override_writes_last_run_to_custom_dir(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -42,7 +42,7 @@ class LastRunStateTests(unittest.TestCase):
             env["HOME"] = str(Path(tmp) / "home")
             env["LAST30DAYS_CONFIG_DIR"] = str(config_dir)
 
-            result = run_last30days("custom config query", env)
+            result = run_peter-wanna-know("custom config query", env)
 
             self.assertEqual(result.returncode, 0, result.stderr)
             payload = json.loads((config_dir / "last-run.json").read_text())

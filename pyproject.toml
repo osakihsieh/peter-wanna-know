@@ -22,9 +22,9 @@ addopts = [
 
 [tool.coverage.run]
 branch = true
-source = ["skills/last30days/scripts", "tests"]
+source = ["skills/peter-wanna-know/scripts", "tests"]
 omit = [
-  "skills/last30days/scripts/lib/vendor/*",
+  "skills/peter-wanna-know/scripts/lib/vendor/*",
   "dist/*",
 ]
 
@@ -32,6 +32,6 @@ omit = [
 skip_empty = true
 show_missing = true
 omit = [
-  "skills/last30days/scripts/lib/vendor/*",
+  "skills/peter-wanna-know/scripts/lib/vendor/*",
   "dist/*",
 ]

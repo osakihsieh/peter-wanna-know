@@ -1,6 +1,6 @@
 ---
 
-> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/last30days-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
+> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/peter-wanna-know-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
 
 title: "feat: vs mode runs N full passes and --competitors is vs with auto-discovery"
 type: feat
@@ -13,7 +13,7 @@ origin: docs/plans/2026-04-22-004-fix-competitors-hosting-model-resolve-and-leak
 
 ## Overview
 
-Architectural unification driven by user correction 2026-04-22: vs mode and `--competitors` are the same thing. A user typing `/last30days OpenAI vs Anthropic vs xAI` should get a full single-entity last30days pass for each of the three entities — three full pipelines, three saved `*-raw.md` files, merged into one comparison output. A user typing `/last30days OpenAI --competitors` should get the same output after the hosting model auto-picks 2 peers; i.e., `--competitors` is a thin shortcut that expands "topic + `--competitors`" into "topic vs peer1 vs peer2" and then runs the unified vs pipeline.
+Architectural unification driven by user correction 2026-04-22: vs mode and `--competitors` are the same thing. A user typing `/peter-wanna-know OpenAI vs Anthropic vs xAI` should get a full single-entity peter-wanna-know pass for each of the three entities — three full pipelines, three saved `*-raw.md` files, merged into one comparison output. A user typing `/peter-wanna-know OpenAI --competitors` should get the same output after the hosting model auto-picks 2 peers; i.e., `--competitors` is a thin shortcut that expands "topic + `--competitors`" into "topic vs peer1 vs peer2" and then runs the unified vs pipeline.
 
 Current state diverges from this:
 
@@ -28,7 +28,7 @@ After this plan:
 
 ## Problem Frame
 
-The product insight from 2026-04-22 test runs is simple: the user wants three full last30days reports plus a comparison merge. Not one comparison pass with N-way targeting merged into a single retrieval pool. Not one save file. Not "main gets Step 0.55, peers get planner defaults." Three full passes. Three save files. Merged output.
+The product insight from 2026-04-22 test runs is simple: the user wants three full peter-wanna-know reports plus a comparison merge. Not one comparison pass with N-way targeting merged into a single retrieval pool. Not one save file. Not "main gets Step 0.55, peers get planner defaults." Three full passes. Three save files. Merged output.
 
 The historical vs mode did that (it ran as 3 passes, saving 3 files). SKILL.md §551 currently says:
 
@@ -53,7 +53,7 @@ This plan closes all of them by unifying the architecture and making hosting-mod
 - R1. vs mode (any topic containing ` vs ` / ` versus `) runs N full `pipeline.run()` calls in parallel, one per entity. Each sub-run uses its entity's own Step 0.55 targeting (from the hosting model's pre-resolution, passed via a new `--competitors-plan` JSON).
 - R2. `--competitors` (and `--competitors=N`) becomes a SKILL.md-level shortcut: the hosting model (a) discovers N peers via WebSearch, (b) runs Step 0.55 per entity (main + peers), (c) rewrites the topic to `"main vs peer1 vs peer2"`, (d) invokes the engine with `--competitors-plan` containing each entity's targeting.
 - R3. New `--competitors-plan` JSON flag. Schema: `{entity_name: {x_handle, x_related, subreddits, github_user, github_repos, context}}`. Implies vs mode when present with a single-entity topic. Applies per-entity targeting to each sub-run. Accepts inline JSON or a file path (matches `--plan`).
-- R4. Each entity's sub-run saves its own `*-raw.md` file when `--save-dir` is in use. Example: `/last30days "Kanye West vs Drake vs Kendrick Lamar" --save-dir=~/Documents/Last30Days` produces `kanye-west-raw.md`, `drake-raw.md`, `kendrick-lamar-raw.md`. Same filenames a single-entity run of each topic would produce. Matches historical vs-mode behavior.
+- R4. Each entity's sub-run saves its own `*-raw.md` file when `--save-dir` is in use. Example: `/peter-wanna-know "Kanye West vs Drake vs Kendrick Lamar" --save-dir=~/Documents/peter-wanna-know` produces `kanye-west-raw.md`, `drake-raw.md`, `kendrick-lamar-raw.md`. Same filenames a single-entity run of each topic would produce. Matches historical vs-mode behavior.
 - R5. Each per-entity saved file includes its own single-row `## Resolved Entities` block so the audit survives. The merged comparison stdout still shows the full 3-row block.
 - R6. Override-leak fix: no main-topic flags (`--subreddits`, `--x-handle`, `--x-related`, `--tiktok-*`, `--ig-creators`, `--github-*`) leak into peer sub-runs. Every per-entity kwarg is scrubbed at the sub-run call site.
 - R7. LAW 7-style stderr for `--competitors` invocations with no list, no plan, no backend is reframed for hosting-model context: leads with "use your WebSearch to discover peers, resolve Step 0.55 per entity, re-invoke with `topic vs peer1 vs peer2 --competitors-plan '...'`." Does not lead with BRAVE_API_KEY.
@@ -63,7 +63,7 @@ This plan closes all of them by unifying the architecture and making hosting-mod
 
 ## Scope Boundaries
 
-- No changes to single-entity `pipeline.run()` semantics. Each sub-run in vs mode behaves identically to a bare `/last30days {entity}` invocation.
+- No changes to single-entity `pipeline.run()` semantics. Each sub-run in vs mode behaves identically to a bare `/peter-wanna-know {entity}` invocation.
 - No changes to the planner's comparison-intent logic for single-entity-containing topics. The `_should_force_deterministic_plan` shortcut for vs-topics routes to fanout, not to its current single-pipeline path.
 - No new emit modes. Comparison output format unchanged.
 - No removal of `--competitors-list`. Stays as a minimum escape hatch (names-only, no per-entity targeting) for scripted headless use.
@@ -80,11 +80,11 @@ This plan closes all of them by unifying the architecture and making hosting-mod
 
 ### Relevant Code and Patterns
 
-- `scripts/last30days.py` — main(), `_main_runner`, `_competitor_runner`, the competitor enable/discovery branch. Primary file.
+- `scripts/peter-wanna-know.py` — main(), `_main_runner`, `_competitor_runner`, the competitor enable/discovery branch. Primary file.
 - `scripts/lib/fanout.py` — existing orchestrator (3.0.11). Reused as-is; `competitor_runner` closure is where per-entity kwargs apply.
 - `scripts/lib/planner.py` — `_should_force_deterministic_plan` detects vs-topics via regex. Current path synthesizes ONE comparison plan; new path routes to fanout.
 - `scripts/lib/render.py` — `render_comparison_multi` (3.0.12) + `_render_resolved_entities_block`. Both reused. `render_full` needs a per-entity variant when saving sub-run files.
-- `scripts/last30days.py` `save_output` — where raw files are written. Needs to iterate per entity when competitor_reports artifact present.
+- `scripts/peter-wanna-know.py` `save_output` — where raw files are written. Needs to iterate per entity when competitor_reports artifact present.
 - `scripts/lib/quality_nudge.py` — BRAVE/SERPER nudge emission.
 - `scripts/lib/polymarket.py` — source adapter for `--polymarket-keywords` and ambiguous-topic auto-skip.
 - SKILL.md §551 "If QUERY_TYPE = COMPARISON" and §679 per-entity Step 0.55 protocol — the hosting-model contract that drives per-entity pre-resolution for both vs mode and `--competitors`.
@@ -134,17 +134,17 @@ This plan closes all of them by unifying the architecture and making hosting-mod
 
 ```
 User invokes:
-   /last30days "OpenAI vs Anthropic vs xAI"
+   /peter-wanna-know "OpenAI vs Anthropic vs xAI"
    OR
-   /last30days OpenAI --competitors     (hosting model rewrites to vs form)
+   /peter-wanna-know OpenAI --competitors     (hosting model rewrites to vs form)
    OR
-   /last30days OpenAI --competitors-list "Anthropic,xAI"
+   /peter-wanna-know OpenAI --competitors-list "Anthropic,xAI"
    OR
-   /last30days "OpenAI vs Anthropic vs xAI" --competitors-plan '{...per-entity...}'
+   /peter-wanna-know "OpenAI vs Anthropic vs xAI" --competitors-plan '{...per-entity...}'
 
            ↓
 
-scripts/last30days.py main():
+scripts/peter-wanna-know.py main():
    - Detect: topic has " vs " OR --competitors enabled
    - If --competitors and no list/plan: emit LAW 7-style stderr with hosting-model instruction
    - If --competitors with list or discovery: rewrite topic to vs form, continue
@@ -164,7 +164,7 @@ fanout.run_competitor_fanout (shared path):
 
            ↓
 
-scripts/last30days.py after fanout:
+scripts/peter-wanna-know.py after fanout:
    - If --save-dir: save each entity's Report as {entity-slug}-raw.md
      Each file includes its own single-row Resolved Entities block
    - emit_comparison_output → render_comparison_multi (merged stdout)
@@ -182,7 +182,7 @@ scripts/last30days.py after fanout:
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py` (main() — detect vs-topic, route to fanout)
+- Modify: `scripts/peter-wanna-know.py` (main() — detect vs-topic, route to fanout)
 - Modify: `scripts/lib/planner.py` (remove / bypass the `_should_force_deterministic_plan` special case for vs topics; vs topics no longer go through `plan_query` as a single comparison plan)
 - Test: `tests/test_vs_mode_fanout.py` (new)
 
@@ -195,7 +195,7 @@ scripts/last30days.py after fanout:
 **Execution note:** Start with an integration test that runs `"A vs B"` via mock mode and asserts fanout was called with two entities + two pipeline.run calls.
 
 **Patterns to follow:**
-- 3.0.11 fanout wiring in `scripts/last30days.py`'s `--competitors` branch.
+- 3.0.11 fanout wiring in `scripts/peter-wanna-know.py`'s `--competitors` branch.
 - `planner._comparison_entities` for the split logic.
 
 **Test scenarios:**
@@ -209,7 +209,7 @@ scripts/last30days.py after fanout:
 
 **Verification:**
 - Test assertions pass.
-- Mock-mode smoke of `/last30days "OpenAI vs Anthropic"` shows fanout invocation, per-entity Reports, merged comparison output.
+- Mock-mode smoke of `/peter-wanna-know "OpenAI vs Anthropic"` shows fanout invocation, per-entity Reports, merged comparison output.
 
 - [ ] **Unit 2: `--competitors-plan` JSON flag + `_subrun_kwargs` helper + override-leak fix**
 
@@ -220,7 +220,7 @@ scripts/last30days.py after fanout:
 **Dependencies:** None (can land alongside or before Unit 1)
 
 **Files:**
-- Modify: `scripts/last30days.py` (argparse + parse + `_competitor_runner` + `_subrun_kwargs` helper)
+- Modify: `scripts/peter-wanna-know.py` (argparse + parse + `_competitor_runner` + `_subrun_kwargs` helper)
 - Possibly modify: `scripts/lib/fanout.py` (no signature change expected; the competitor_runner contract is unchanged)
 - Test: `tests/test_cli_competitors.py` (extend)
 - Test: `tests/test_competitors_plan_threading.py` (new)
@@ -242,7 +242,7 @@ scripts/last30days.py after fanout:
 **Execution note:** Test-first for the override-leak regression. Use the Kanye 2026-04-22 receipt as the failing test input (main `--subreddits=Kanye,hiphopheads` + `--competitors-list "Drake"` → assert Drake's pipeline.run receives `subreddits=None`).
 
 **Patterns to follow:**
-- `--plan` parsing block in `scripts/last30days.py`.
+- `--plan` parsing block in `scripts/peter-wanna-know.py`.
 - 3.0.12's `entity_config = dict(config)` deep-copy pattern.
 
 **Test scenarios:**
@@ -271,7 +271,7 @@ scripts/last30days.py after fanout:
 **Dependencies:** Unit 1, Unit 2
 
 **Files:**
-- Modify: `scripts/last30days.py` (`save_output` iteration after fanout)
+- Modify: `scripts/peter-wanna-know.py` (`save_output` iteration after fanout)
 - Modify: `scripts/lib/render.py` (`render_full` includes single-row Resolved Entities block when that entity's `artifacts["resolved"]` is present)
 - Test: `tests/test_save_raw_per_entity.py` (new)
 
@@ -280,7 +280,7 @@ scripts/last30days.py after fanout:
   - Call `save_output(entity_report, emit="md", save_dir=args.save_dir, suffix=args.save_suffix)`.
   - Uses entity's `slugify(entity)` for the filename. Same pattern a single-entity run uses.
 - Each saved file invokes `render_full` (or the save-variant). `render_full` now checks for `report.artifacts["resolved"]` and prepends a single-row Resolved Entities block.
-- Stderr logs one `[last30days] Saved output to <path>` line per entity.
+- Stderr logs one `[peter-wanna-know] Saved output to <path>` line per entity.
 - Single-entity runs unchanged (no extra files, render_full unchanged for them).
 
 **Patterns to follow:**
@@ -289,7 +289,7 @@ scripts/last30days.py after fanout:
 - 3.0.12's `_render_resolved_entities_block` (reused, single-row mode).
 
 **Test scenarios:**
-- Happy path: `/last30days "A vs B vs C" --save-dir=/tmp/x` → `/tmp/x/a-raw.md`, `/tmp/x/b-raw.md`, `/tmp/x/c-raw.md` exist.
+- Happy path: `/peter-wanna-know "A vs B vs C" --save-dir=/tmp/x` → `/tmp/x/a-raw.md`, `/tmp/x/b-raw.md`, `/tmp/x/c-raw.md` exist.
 - Happy path: `--competitors-list "Drake,Kendrick" --save-dir=/tmp/x` on topic Kanye → three files: `kanye-west-raw.md`, `drake-raw.md`, `kendrick-lamar-raw.md`.
 - Happy path: each file includes a single-row Resolved Entities block for its entity.
 - Happy path: single-entity run with `--save-dir` → one file, no Resolved block (unchanged).
@@ -310,14 +310,14 @@ scripts/last30days.py after fanout:
 **Dependencies:** Unit 2 (flag must exist)
 
 **Files:**
-- Modify: `scripts/last30days.py` (the `[Competitors] --competitors requires...` stderr block)
+- Modify: `scripts/peter-wanna-know.py` (the `[Competitors] --competitors requires...` stderr block)
 - Modify: `scripts/lib/quality_nudge.py` (or wherever footer nudge emits; verify during implementation)
 - Test: `tests/test_competitors_no_backend_message.py` (new)
 - Test: `tests/test_footer_nudge_suppression.py` (new)
 
 **Approach:**
 - Rewrite stderr in this order:
-  1. "If you are the hosting reasoning model (Claude Code, Codex, Hermes, Gemini, or any agent with WebSearch), the recommended path: (a) discover N peers via WebSearch, (b) run Step 0.55 for main + each peer, (c) re-invoke as `/last30days 'topic vs peer1 vs peer2' --competitors-plan '{...}'`. See SKILL.md 'Competitor mode'."
+  1. "If you are the hosting reasoning model (Claude Code, Codex, Hermes, Gemini, or any agent with WebSearch), the recommended path: (a) discover N peers via WebSearch, (b) run Step 0.55 for main + each peer, (c) re-invoke as `/peter-wanna-know 'topic vs peer1 vs peer2' --competitors-plan '{...}'`. See SKILL.md 'Competitor mode'."
   2. "Headless / cron path: set BRAVE_API_KEY / EXA_API_KEY / SERPER_API_KEY / PARALLEL_API_KEY / OPENROUTER_API_KEY and re-run."
   3. "Minimum escape hatch: `--competitors-list 'A,B,C'` skips discovery but does not pre-resolve peers."
 - Suppress footer nudge when `external_plan` OR `competitors_plan` was passed.
@@ -341,7 +341,7 @@ scripts/last30days.py after fanout:
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py` (argparse)
+- Modify: `scripts/peter-wanna-know.py` (argparse)
 - Modify: `scripts/lib/polymarket.py`
 - Test: `tests/test_polymarket_disambiguation.py` (new)
 
@@ -388,8 +388,8 @@ scripts/last30days.py after fanout:
 - Test expectation: none — documentation. Verification is dogfood.
 
 **Verification:**
-- `/last30days "OpenAI vs Anthropic vs xAI"` in a fresh Claude Code window produces 3 save files with populated Resolved blocks and non-dash per-entity targeting.
-- `/last30days OpenAI --competitors` produces same after discovery step.
+- `/peter-wanna-know "OpenAI vs Anthropic vs xAI"` in a fresh Claude Code window produces 3 save files with populated Resolved blocks and non-dash per-entity targeting.
+- `/peter-wanna-know OpenAI --competitors` produces same after discovery step.
 
 - [ ] **Unit 7: Version 3.0.13, CHANGELOG, sync, hot-copy**
 
@@ -403,12 +403,12 @@ scripts/last30days.py after fanout:
 - Modify: `.claude-plugin/plugin.json`
 - Modify: `CHANGELOG.md`
 - Run: `bash scripts/sync.sh`
-- Hot-copy: `~/.claude/plugins/cache/last30days-skill/last30days/3.0.13/`
+- Hot-copy: `~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.13/`
 
 **Approach:**
 - CHANGELOG: group the changes. "Changed: vs mode now runs N full passes in parallel, one per entity — reverting the one-pass optimization to restore per-entity depth. Added: --competitors-plan JSON for per-entity Step 0.55 targeting (applies to vs mode and --competitors). Changed: --competitors is now a SKILL.md shortcut for vs-with-discovery. Added: per-entity *-raw.md save files. Fixed: override-leak from main to peer sub-runs. Changed: LAW 7 stderr framing for hosting-model context. Changed: BRAVE/SERPER footer nudge suppressed when --plan / --competitors-plan present. Added: --polymarket-keywords + auto-skip for ambiguous topics."
 - Beta channel first per CLAUDE.md.
-- Hot-copy so public `/last30days` picks up 3.0.13.
+- Hot-copy so public `/peter-wanna-know` picks up 3.0.13.
 
 **Test scenarios:**
 - Test expectation: none — packaging.
@@ -440,7 +440,7 @@ scripts/last30days.py after fanout:
 ## Documentation / Operational Notes
 
 - Beta channel first per CLAUDE.md.
-- After merge: hot-copy to `~/.claude/plugins/cache/last30days-skill/last30days/3.0.13/`.
+- After merge: hot-copy to `~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.13/`.
 - CHANGELOG explicitly frames the vs-mode change as an architectural revert-with-parallelism, not a regression to the old serial N-pass.
 
 ## Sources & References
@@ -450,5 +450,5 @@ scripts/last30days.py after fanout:
 - Initial plan (3.0.11): `docs/plans/2026-04-22-002-feat-competitors-flag-comparison-fanout-plan.md`
 - 2026-04-22 test session receipts (Warriors, Seattle, Arizona Wildcats, Kanye West)
 - SKILL.md §551 + §679 — the per-entity Step 0.55 protocol the hosting model uses for both paths
-- Related code: `scripts/lib/fanout.py`, `scripts/last30days.py` `_competitor_runner`, `scripts/lib/planner.py` vs-topic special-case, `scripts/lib/render.py` `_render_resolved_entities_block`, `scripts/lib/polymarket.py`, `scripts/lib/quality_nudge.py`
+- Related code: `scripts/lib/fanout.py`, `scripts/peter-wanna-know.py` `_competitor_runner`, `scripts/lib/planner.py` vs-topic special-case, `scripts/lib/render.py` `_render_resolved_entities_block`, `scripts/lib/polymarket.py`, `scripts/lib/quality_nudge.py`
 - Related PRs: #308 (3.0.11), #309 (3.0.12)

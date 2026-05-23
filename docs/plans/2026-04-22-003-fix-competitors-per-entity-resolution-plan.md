@@ -1,6 +1,6 @@
 ---
 
-> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/last30days-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
+> **NOTE (added 2026-05-16):** This plan references `bash scripts/sync.sh`. That script was deleted in [PR #405](https://github.com/mvanhorn/peter-wanna-know-skill/pull/405); the install workflow is now `npx skills add . -g -y` (symlinks the working tree across every detected harness). For context on why sync.sh went away, see [docs/solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md](../solutions/workflow-issues/release-consistency-test-cascade-2026-05-16.md). The decisions captured in this plan remain accurate; only the deploy mechanism changed.
 
 title: "fix: per-entity resolution, default-2, and stale-path guard for --competitors"
 type: fix
@@ -16,7 +16,7 @@ origin: docs/plans/2026-04-22-002-feat-competitors-flag-comparison-fanout-plan.m
 Three test runs of v3.0.11 `--competitors` surfaced four real bugs plus one product tweak. This plan fixes all of them in a single follow-up:
 
 1. Competitor sub-runs get no Step 0.55 resolution (no X handle, no subreddits, no GitHub repo). Drake / Kendrick / Travis ran with deterministic-fallback single-word queries while Kanye had the full targeting package. User called it "lazy" and was right.
-2. Two of three test windows (Linear, Coinbase) never invoked the new flag at all. They loaded SKILL.md from `plugins/marketplaces/last30days-skill/` (a Claude-Code-managed git clone pinned to origin/main, which predates PR #308) instead of `plugins/cache/last30days-skill/last30days/3.0.11/`, so `--help` showed no `--competitors` flag and the model fell back to the manual comparison path.
+2. Two of three test windows (Linear, Coinbase) never invoked the new flag at all. They loaded SKILL.md from `plugins/marketplaces/peter-wanna-know-skill/` (a Claude-Code-managed git clone pinned to origin/main, which predates PR #308) instead of `plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.11/`, so `--help` showed no `--competitors` flag and the model fell back to the manual comparison path.
 3. Each competitor sub-run emits a scary `[Planner] No --plan passed... deterministic fallback` stderr line because LAW 7 targets the hosting-model path, not internal fan-out sub-runs.
 4. Default competitor count is 3 (→ 4-way comparison). User wants default 2 (→ 3-way: original + 2 peers). Flag keeps `--competitors=N` to customize.
 
@@ -41,7 +41,7 @@ Root causes:
 - R2. Each competitor sub-run performs Step 0.55 resolution (X handle, subreddits, GitHub user/repos, news context) before its pipeline runs — not just the main topic.
 - R3. Sub-runs do not emit the LAW 7 `No --plan passed` warning; they are internal fan-out, not hosting-model calls.
 - R4. The rendered comparison output includes a visible "Resolved entities" block showing per-entity handles/subs/github for debug transparency (answers "did it resolve everyone?" without the user having to read stderr).
-- R5. SKILL.md has a canonical-path self-check at the top: if the reader loaded it from anywhere other than `plugins/cache/last30days-skill/last30days/{VERSION}/`, re-read from the versioned path before proceeding.
+- R5. SKILL.md has a canonical-path self-check at the top: if the reader loaded it from anywhere other than `plugins/cache/peter-wanna-know-skill/peter-wanna-know/{VERSION}/`, re-read from the versioned path before proceeding.
 - R6. Version bumps to 3.0.12; CHANGELOG entry; `scripts/sync.sh` deploys.
 
 ## Scope Boundaries
@@ -61,9 +61,9 @@ Root causes:
 
 ### Relevant Code and Patterns
 
-- `scripts/last30days.py:205-219` — `--competitors` / `--competitors-list` argparse definition (const=3 today; changing to 2).
-- `scripts/last30days.py:220-290` — `resolve_competitors_args()` validator; update `COMPETITORS_DEFAULT`.
-- `scripts/last30days.py:438-520` — main() fan-out orchestration; currently passes only topic/depth to each `_competitor_runner`.
+- `scripts/peter-wanna-know.py:205-219` — `--competitors` / `--competitors-list` argparse definition (const=3 today; changing to 2).
+- `scripts/peter-wanna-know.py:220-290` — `resolve_competitors_args()` validator; update `COMPETITORS_DEFAULT`.
+- `scripts/peter-wanna-know.py:438-520` — main() fan-out orchestration; currently passes only topic/depth to each `_competitor_runner`.
 - `scripts/lib/fanout.py:40-95` — `run_competitor_fanout()` signature. The `competitor_runner` callable is where per-entity resolution needs to happen.
 - `scripts/lib/resolve.py:179-258` — `auto_resolve()` is the exact per-entity resolver to reuse. Already does X handle + subreddits + GitHub user/repos + news context in parallel via ThreadPoolExecutor.
 - `scripts/lib/planner.py:80-135` — `plan_query()` emits the LAW 7 stderr. A `quiet: bool` keyword or `internal_subrun: bool` flag will suppress it.
@@ -75,7 +75,7 @@ Root causes:
 
 - `docs/plans/2026-04-22-002-feat-competitors-flag-comparison-fanout-plan.md` acknowledged the per-entity-resolution gap as a v1 tradeoff. This plan closes that gap.
 - Kanye run stderr: `[Planner] No --plan passed... deterministic fallback` × 3 (once per competitor sub-run). That's the LAW 7 noise R3 targets.
-- Linear / Coinbase runs loaded `plugins/marketplaces/last30days-skill/CLAUDE.md` as the first hit. That's the stale-path issue R5 targets.
+- Linear / Coinbase runs loaded `plugins/marketplaces/peter-wanna-know-skill/CLAUDE.md` as the first hit. That's the stale-path issue R5 targets.
 
 ### External References
 
@@ -116,18 +116,18 @@ Root causes:
 **Dependencies:** None
 
 **Files:**
-- Modify: `scripts/last30days.py` (`COMPETITORS_DEFAULT`, `--competitors` const, stderr messages if any reference 3)
+- Modify: `scripts/peter-wanna-know.py` (`COMPETITORS_DEFAULT`, `--competitors` const, stderr messages if any reference 3)
 - Modify: `SKILL.md` Competitor mode section ("discovered 2-6" wording, bare-flag default line)
 - Modify: `README.md` auto-discovered example line (if it references count)
 - Test: `tests/test_cli_competitors.py`
 
 **Approach:**
-- Change `COMPETITORS_DEFAULT = 3` → `2` in `scripts/last30days.py`.
+- Change `COMPETITORS_DEFAULT = 3` → `2` in `scripts/peter-wanna-know.py`.
 - Change argparse `--competitors` `const=3` → `const=2`.
 - Update any SKILL.md / README copy referencing "3 peers" to "2 peers" (default) or "2-6 peers" (range).
 
 **Patterns to follow:**
-- Existing default constants in `scripts/last30days.py` argparse block.
+- Existing default constants in `scripts/peter-wanna-know.py` argparse block.
 
 **Test scenarios:**
 - Happy path: bare `--competitors` yields count=2, enabled=True, empty explicit_list.
@@ -148,7 +148,7 @@ Root causes:
 
 **Files:**
 - Modify: `scripts/lib/fanout.py`
-- Modify: `scripts/last30days.py` (`_competitor_runner` closure builds the resolved args)
+- Modify: `scripts/peter-wanna-know.py` (`_competitor_runner` closure builds the resolved args)
 - Test: `tests/test_competitor_fanout.py`
 - Test: `tests/test_competitors_resolve_integration.py` (new; covers the auto-resolve path)
 
@@ -165,7 +165,7 @@ Root causes:
 **Execution note:** Start with a failing integration test that exercises two-entity fanout + auto-resolve via a mocked `resolve.auto_resolve` and asserts that `pipeline.run` receives the resolved x_handle/subreddits for each entity.
 
 **Patterns to follow:**
-- `scripts/last30days.py` main topic branch (`if args.auto_resolve and not external_plan`) already calls `resolve.auto_resolve` and propagates results — mirror the shape for competitors.
+- `scripts/peter-wanna-know.py` main topic branch (`if args.auto_resolve and not external_plan`) already calls `resolve.auto_resolve` and propagates results — mirror the shape for competitors.
 - Config isolation: `scripts/lib/pipeline.py:162-220` reads config as-is; use `dict(config)` to avoid cross-sub-run mutation of `_auto_resolve_context`.
 
 **Test scenarios:**
@@ -192,7 +192,7 @@ Root causes:
 **Files:**
 - Modify: `scripts/lib/planner.py` (`plan_query` signature + conditional stderr)
 - Modify: `scripts/lib/pipeline.py` (`run` signature + propagation)
-- Modify: `scripts/last30days.py` or `scripts/lib/fanout.py` (pass `internal_subrun=True` for competitor runners)
+- Modify: `scripts/peter-wanna-know.py` or `scripts/lib/fanout.py` (pass `internal_subrun=True` for competitor runners)
 - Test: `tests/test_planner_v3.py` (or new `tests/test_planner_quiet_mode.py`)
 - Test: `tests/test_competitor_fanout.py` (assert sub-runs don't emit LAW 7 stderr)
 
@@ -210,7 +210,7 @@ Root causes:
 - Happy path: `plan_query(..., internal_subrun=True, provider=None, model=None)` returns the deterministic fallback plan WITHOUT writing the LAW 7 stderr block.
 - Happy path: `plan_query(...)` with default `internal_subrun=False` still writes the LAW 7 warning (unchanged behavior).
 - Integration: end-to-end competitor fanout; assert captured stderr contains zero occurrences of `No --plan passed` and zero of `YOU ARE the planner`.
-- Integration: main topic is not part of competitor mode; if the user invokes bare `/last30days OpenAI` without `--plan`, LAW 7 stderr fires exactly once (regression test).
+- Integration: main topic is not part of competitor mode; if the user invokes bare `/peter-wanna-know OpenAI` without `--plan`, LAW 7 stderr fires exactly once (regression test).
 
 **Verification:**
 - Running the Kanye-style smoke test shows zero `[Planner] No --plan passed` lines for Drake / Kendrick / Travis sub-runs.
@@ -256,7 +256,7 @@ Root causes:
 
 - [ ] **Unit 5: SKILL.md canonical-path self-check**
 
-**Goal:** A top-of-file SKILL.md directive forces any reader (Claude Code, Codex, Hermes, Gemini) to verify they loaded from `plugins/cache/last30days-skill/last30days/{VERSION}/SKILL.md` before proceeding. If loaded from `marketplaces/` or any other path, re-read from the pinned versioned cache.
+**Goal:** A top-of-file SKILL.md directive forces any reader (Claude Code, Codex, Hermes, Gemini) to verify they loaded from `plugins/cache/peter-wanna-know-skill/peter-wanna-know/{VERSION}/SKILL.md` before proceeding. If loaded from `marketplaces/` or any other path, re-read from the pinned versioned cache.
 
 **Requirements:** R5
 
@@ -273,12 +273,12 @@ Root causes:
   Before reading anything else below, verify you loaded this SKILL.md from
   the versioned cache, not the marketplace clone:
 
-      CANONICAL=$HOME/.claude/plugins/cache/last30days-skill/last30days/
+      CANONICAL=$HOME/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/
       CANONICAL_LATEST=$(ls -d "$CANONICAL"*/ 2>/dev/null | sort -V | tail -1)
 
   If the SKILL.md you just read is not under $CANONICAL_LATEST, STOP. Re-read
   $CANONICAL_LATEST/SKILL.md and restart from here. Marketplace clones
-  (`plugins/marketplaces/last30days-skill/`) are pinned to origin/main and
+  (`plugins/marketplaces/peter-wanna-know-skill/`) are pinned to origin/main and
   can be stale; the versioned cache is the ground truth.
   ```
 - Reinforce in the existing LAW 7 block that `--help` output must be read from the same pinned `SKILL_ROOT` to avoid flag-list skew.
@@ -291,7 +291,7 @@ Root causes:
 - Test expectation: none — SKILL.md is documentation; no unit test, verified by follow-up user invocation.
 
 **Verification:**
-- In a fresh Claude Code window, `/last30days Test --competitors` loads SKILL.md, the model executes the STEP 0 self-check, and (if it had loaded from marketplaces/) switches to the cache path before running `--help` or the engine. Observable via the model's announced reasoning / task list.
+- In a fresh Claude Code window, `/peter-wanna-know Test --competitors` loads SKILL.md, the model executes the STEP 0 self-check, and (if it had loaded from marketplaces/) switches to the cache path before running `--help` or the engine. Observable via the model's announced reasoning / task list.
 
 - [ ] **Unit 6: Version bump, CHANGELOG, sync**
 
@@ -308,8 +308,8 @@ Root causes:
 
 **Approach:**
 - CHANGELOG entry under `## [3.0.12]` dated 2026-04-22 covering the four fixes (Fixed: per-entity resolution; Fixed: LAW 7 sub-run noise; Changed: default count 3→2; Added: Resolved entities block; Added: canonical-path self-check in SKILL.md).
-- `sync.sh` deploys to `~/.claude/plugins/cache/last30days-skill-private/...`, `~/.agents/`, `~/.codex/`, Hermes.
-- Manual hot-copy to `~/.claude/plugins/cache/last30days-skill/last30days/3.0.12/` so the public `/last30days` slash command picks up the new version before PR merge (matches the 3.0.11 testing pattern).
+- `sync.sh` deploys to `~/.claude/plugins/cache/peter-wanna-know-skill-private/...`, `~/.agents/`, `~/.codex/`, Hermes.
+- Manual hot-copy to `~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/3.0.12/` so the public `/peter-wanna-know` slash command picks up the new version before PR merge (matches the 3.0.11 testing pattern).
 
 **Test scenarios:**
 - Test expectation: none — packaging only. Verification is by inspection.
@@ -317,7 +317,7 @@ Root causes:
 **Verification:**
 - `grep version .claude-plugin/plugin.json` returns `3.0.12`.
 - `sync.sh` exits 0 with "Import check: OK" for each target.
-- Hot-copied 3.0.12 directory contains the new files and `/last30days` picks up the new version (highest-version resolver).
+- Hot-copied 3.0.12 directory contains the new files and `/peter-wanna-know` picks up the new version (highest-version resolver).
 
 ## System-Wide Impact
 
@@ -326,7 +326,7 @@ Root causes:
 - **State lifecycle risks:** Config dict is mutated by `auto_resolve` (via `config["_auto_resolve_context"]`). Must deep-copy per sub-run or scope context to a local mapping — otherwise two sub-runs' context strings race.
 - **API surface parity:** `pipeline.run` gains a keyword (`internal_subrun`); callers that don't pass it get the existing behavior. `planner.plan_query` gains the same. Backward compatible.
 - **Integration coverage:** New integration test for the fanout + auto-resolve + render chain. Existing snapshot tests update to include the Resolved block.
-- **Unchanged invariants:** Single-entity `/last30days` invocations (no `--competitors`) behave identically. Explicit `A vs B` comparison topics behave identically. LAW 7 still fires on the default hosting-model path. `render_compact` path is untouched.
+- **Unchanged invariants:** Single-entity `/peter-wanna-know` invocations (no `--competitors`) behave identically. Explicit `A vs B` comparison topics behave identically. LAW 7 still fires on the default hosting-model path. `render_compact` path is untouched.
 
 ## Risks & Dependencies
 
@@ -340,7 +340,7 @@ Root causes:
 
 ## Documentation / Operational Notes
 
-- Beta channel first: merge behind `/last30days-beta` via the private repo before cherry-picking to public. Follows the same process as 3.0.11.
+- Beta channel first: merge behind `/peter-wanna-know-beta` via the private repo before cherry-picking to public. Follows the same process as 3.0.11.
 - Version 3.0.12 is a fix release; no marketing post required.
 - After merge, add a line to the PR description pointing at this plan.
 

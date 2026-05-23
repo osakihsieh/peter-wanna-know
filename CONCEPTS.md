@@ -1,6 +1,6 @@
 # Concepts
 
-Shared vocabulary for `last30days-skill`. Terms here have a precise project-specific meaning — distinct enough from their general technical sense that a new contributor would need them defined to follow conversations, PR descriptions, or the SKILL.md contract.
+Shared vocabulary for `peter-wanna-know-skill`. Terms here have a precise project-specific meaning — distinct enough from their general technical sense that a new contributor would need them defined to follow conversations, PR descriptions, or the SKILL.md contract.
 
 ## The package
 
@@ -10,7 +10,7 @@ A self-contained agent-instructions package consisting of a `SKILL.md` prose con
 
 ### Engine
 
-The Python script (`scripts/last30days.py`) the Skill's SKILL.md invokes to do the actual research work. The Engine and SKILL.md have a contract: SKILL.md tells the model which flags to pass (`--plan`, `--competitors-plan`, `--x-handle`, `--subreddits`, `--emit=compact`, etc.), and the Engine produces a specific output shape (badge line, ranked evidence clusters, emoji-tree footer) that the model is contractually required to pass through. The Engine is implementation; the SKILL.md prose is the agent-facing surface.
+The Python script (`scripts/peter-wanna-know.py`) the Skill's SKILL.md invokes to do the actual research work. The Engine and SKILL.md have a contract: SKILL.md tells the model which flags to pass (`--plan`, `--competitors-plan`, `--x-handle`, `--subreddits`, `--emit=compact`, etc.), and the Engine produces a specific output shape (badge line, ranked evidence clusters, emoji-tree footer) that the model is contractually required to pass through. The Engine is implementation; the SKILL.md prose is the agent-facing surface.
 
 ### Harness
 
@@ -20,4 +20,4 @@ The agent runtime that loads Skills and invokes them on the user's behalf. Claud
 
 ### Beta channel
 
-A parallel install of the Skill, sourced from the private `mvanhorn/last30days-skill-private` repo and installed as `/last30days-beta` rather than `/last30days`. The Beta channel exists so experimental changes can be tested by real users before they ship to the public `/last30days`. Promotion from Beta to public happens via a review PR against this (public) repo — Beta-only changes never ship to public without that PR. The Beta channel workflow guide lives in `BETA.md` in the private repo.
+A parallel install of the Skill, sourced from the private `mvanhorn/peter-wanna-know-skill-private` repo and installed as `/peter-wanna-know-beta` rather than `/peter-wanna-know`. The Beta channel exists so experimental changes can be tested by real users before they ship to the public `/peter-wanna-know`. Promotion from Beta to public happens via a review PR against this (public) repo — Beta-only changes never ship to public without that PR. The Beta channel workflow guide lives in `BETA.md` in the private repo.

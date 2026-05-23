@@ -1,11 +1,11 @@
 {
-  "name": "last30days-skill",
+  "name": "peter-wanna-know-skill",
   "interface": {
     "displayName": "Last 30 Days"
   },
   "plugins": [
     {
-      "name": "last30days",
+      "name": "peter-wanna-know",
       "source": {
         "source": "local",
         "path": "./"

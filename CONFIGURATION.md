@@ -20,10 +20,10 @@ This is a focused **configuration reference** maintained alongside the engine. T
 ## Where output is saved
 
 | Platform | Default path | Override |
-|---|---|---|
-| Linux / macOS | `LAST30DAYS_MEMORY_DIR` defaults to `~/Documents/Last30Days/` | set `LAST30DAYS_MEMORY_DIR=/path` |
-| Windows | `LAST30DAYS_MEMORY_DIR` defaults to `C:\Users\<you>\Documents\Last30Days\` | set `LAST30DAYS_MEMORY_DIR=C:\path` |
-
+| | Linux / macOS | `PETER_WANNA_KNOW_MEMORY_DIR` defaults to `~/Documents/peter-wanna-know/` | set `PETER_WANNA_KNOW_MEMORY_DIR=/path` |
+| Windows | `PETER_WANNA_KNOW_MEMORY_DIR` defaults to `C:\Users\<you>\Documents\peter-wanna-know\` | set `PETER_WANNA_KNOW_MEMORY_DIR=C:\path` 
+| Windows | `PETER_WANNA_KNOW_MEMORY_DIR` defaults to `C:\Users\<you>\Documents\peter-wanna-know\` | set `PETER_WANNA_KNOW_MEMORY_DIR=C:\path` 
+| Windows | `PETER_WANNA_KNOW_MEMORY_DIR` defaults to `C:\Users\<you>\Documents\peter-wanna-know\` | set `PETER_WANNA_KNOW_MEMORY_DIR=C:\path` |
 Each run produces one file per topic, slug-named:
 `<slug>-raw[-suffix].md`. Same topic + same suffix on the same day overwrites; same topic + same suffix on different days appends a date stamp.
 
@@ -31,7 +31,7 @@ Each run produces one file per topic, slug-named:
 - `--save-dir <path>` - one-off output location.
 - `--save-suffix <name>` - distinguish runs of the same topic (e.g. per client: `--save-suffix=acme`).
 
-The footer line `📎 Raw results saved to ${LAST30DAYS_MEMORY_DIR:-$HOME/Documents/Last30Days}/<slug>-raw.md` is the canonical pointer; if it shows backslashes on Windows update past v3.1.1.
+The footer line `📎 Raw results saved to ${PETER_WANNA_KNOW_MEMORY_DIR:-$HOME/Documents/peter-wanna-know}/<slug>-raw.md` is the canonical pointer; if it shows backslashes on Windows update past v3.1.1.
 
 ---
 
@@ -44,7 +44,7 @@ The skill reads keys from a `.env` file. Two locations are supported, in priorit
 
 Override the global location with `LAST30DAYS_CONFIG_DIR=/path` (or `LAST30DAYS_CONFIG_DIR=""` for no-config mode). File permissions should be `600` on POSIX hosts - the engine warns on every run if they aren't.
 
-The project-scoped file is the cleanest pattern for **per-client setups**: drop a `.claude/peter-wanna-know.env` into each client folder (`SCRAPECREATORS_API_KEY`, `INCLUDE_SOURCES`, `LAST30DAYS_MEMORY_DIR`, `BSKY_HANDLE`, etc), `cd` into that folder, and the skill picks up that client's configuration automatically. No wrapper scripts needed for the common case.
+The project-scoped file is the cleanest pattern for **per-client setups**: drop a `.claude/peter-wanna-know.env` into each client folder (`SCRAPECREATORS_API_KEY`, `INCLUDE_SOURCES`, `PETER_WANNA_KNOW_MEMORY_DIR`, `BSKY_HANDLE`, etc), `cd` into that folder, and the skill picks up that client's configuration automatically. No wrapper scripts needed for the common case.
 
 **Source-by-source** - what each key unlocks:
 
@@ -192,7 +192,7 @@ The skill is built to flex around different client environments. Four patterns t
 The simplest pattern when each client has its own working directory: drop a `.claude/peter-wanna-know.env` into the client folder. The skill picks it up automatically (see [API keys](#api-keys-env) for the lookup priority). Typical contents:
 
 ```bash
-LAST30DAYS_MEMORY_DIR=C:\Users\<you>\Clients\acme\Research\Last30Days
+PETER_WANNA_KNOW_MEMORY_DIR=C:\Users\<you>\Clients\acme\Research\peter-wanna-know
 SCRAPECREATORS_API_KEY=<acme-scoped-key-or-shared>
 INCLUDE_SOURCES=tiktok,instagram
 BSKY_HANDLE=<acme-bluesky-handle>.bsky.social
@@ -209,7 +209,7 @@ PowerShell example:
 ```powershell
 function Run-L30D-Client {
     param([string]$ClientSlug, [Parameter(ValueFromRemainingArguments=$true)]$Args)
-    $env:LAST30DAYS_MEMORY_DIR = "C:\Users\$env:USERNAME\Clients\$ClientSlug\Research\Last30Days"
+    $env:PETER_WANNA_KNOW_MEMORY_DIR = "C:\Users\$env:USERNAME\Clients\$ClientSlug\Research\peter-wanna-know"
     /peter-wanna-know @Args --save-suffix=$ClientSlug
 }
 # Usage: Run-L30D-Client acme "british airways middle east"
@@ -220,7 +220,7 @@ Bash example:
 ```bash
 l30d-client() {
     local client=$1; shift
-    LAST30DAYS_MEMORY_DIR="$HOME/Clients/$client/Research/Last30Days" \
+    PETER_WANNA_KNOW_MEMORY_DIR="$HOME/Clients/$client/Research/peter-wanna-know" \
         /peter-wanna-know "$@" --save-suffix="$client"
 }
 # Usage: l30d-client acme "british airways middle east"

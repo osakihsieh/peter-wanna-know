@@ -10,7 +10,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
-import last30days as cli
+import peter-wanna-know as cli
 from lib import schema
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -51,7 +51,7 @@ class CliV3Tests(unittest.TestCase):
 
     def test_mock_json_cli(self):
         result = subprocess.run(
-            [sys.executable, "skills/last30days/scripts/last30days.py", "test topic", "--mock", "--emit=json"],
+            [sys.executable, "skills/peter-wanna-know/scripts/peter-wanna-know.py", "test topic", "--mock", "--emit=json"],
             cwd=REPO_ROOT,
             capture_output=True,
             text=True,
@@ -109,7 +109,7 @@ class CliV3Tests(unittest.TestCase):
                 cli.ensure_supported_python((3, 9, 6))
         self.assertEqual(1, exc.exception.code)
         message = stderr.getvalue()
-        self.assertIn("last30days v3 requires Python 3.12+", message)
+        self.assertIn("peter-wanna-know v3 requires Python 3.12+", message)
         self.assertIn("Detected Python 3.9.6", message)
         self.assertIn("python3.12", message)
 
@@ -132,13 +132,13 @@ class CliV3Tests(unittest.TestCase):
     def test_slugify_and_emit_output_cover_supported_modes(self):
         report = self.make_report()
         self.assertEqual("openclaw-vs-nanoclaw", cli.slugify(report.topic))
-        self.assertEqual("last30days CLI.", cli.__doc__)
+        self.assertEqual("peter-wanna-know CLI.", cli.__doc__)
 
         compact = cli.emit_output(report, "compact")
         json_output = cli.emit_output(report, "json")
         context = cli.emit_output(report, "context")
 
-        self.assertIn("# last30days v", compact)
+        self.assertIn("# peter-wanna-know v", compact)
         self.assertIn('"topic": "OpenClaw vs NanoClaw"', json_output)
         self.assertIsInstance(context, str)
 
@@ -163,7 +163,7 @@ class CliV3Tests(unittest.TestCase):
 
     def test_compute_save_path_display_uses_posix_slashes_under_home(self):
         # Regression: f"~/{relative}" stringified pathlib.Path with the
-        # OS-native separator, producing "~/Documents\\Last30Days\\..." on
+        # OS-native separator, producing "~/Documents\\peter-wanna-know\\..." on
         # Windows that no shell or File Explorer could open. The fix is
         # f"~/{relative.as_posix()}" which forces forward slashes regardless
         # of host OS. On POSIX hosts this asserts the contract for
@@ -171,7 +171,7 @@ class CliV3Tests(unittest.TestCase):
         real_home = Path.home()
         tmp_under_home = Path(tempfile.mkdtemp(prefix="l30d_save_path_", dir=str(real_home)))
         try:
-            save_dir = tmp_under_home / "Documents" / "Last30Days"
+            save_dir = tmp_under_home / "Documents" / "peter-wanna-know"
             save_dir.mkdir(parents=True, exist_ok=True)
             display = cli.compute_save_path_display(
                 str(save_dir), "british airways middle east", "v3", "compact"
@@ -240,7 +240,7 @@ class CliV3Tests(unittest.TestCase):
              mock.patch.object(cli.ui, "show_diagnostic_banner") as banner, \
              mock.patch.object(cli.ui, "ProgressDisplay", return_value=fake_progress) as progress_cls, \
              mock.patch.object(cli, "emit_output", return_value="# rendered"), \
-             mock.patch.object(sys, "argv", ["last30days.py", "test", "topic"]):
+             mock.patch.object(sys, "argv", ["peter-wanna-know.py", "test", "topic"]):
             stdout = io.StringIO()
             stderr = io.StringIO()
             with redirect_stdout(stdout), redirect_stderr(stderr):
@@ -273,7 +273,7 @@ class CliV3Tests(unittest.TestCase):
              mock.patch.object(cli.pipeline, "run", return_value=report) as run_mock, \
              mock.patch.object(cli, "emit_output", return_value="# rendered"), \
              mock.patch.object(sys, "argv", [
-                 "last30days.py",
+                 "peter-wanna-know.py",
                  "claude",
                  "code",
                  "vs",

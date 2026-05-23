@@ -15,64 +15,64 @@ A week-long shipping cycle: ~75 PRs merged plus 7 community fixes salvaged throu
 
 **Emit modes and sources**
 
-- `--emit=html` for shareable, print-friendly HTML research briefs ([#332](https://github.com/mvanhorn/last30days-skill/pull/332)).
-- **Digg AI 1000 source**, auto-enabled when `digg-pp-cli` is on PATH ([#370](https://github.com/mvanhorn/last30days-skill/pull/370)). Surfaces curated story clusters from the AI 1000 leaderboard and pulls attributable X-post quotes into the brief.
+- `--emit=html` for shareable, print-friendly HTML research briefs ([#332](https://github.com/mvanhorn/peter-wanna-know-skill/pull/332)).
+- **Digg AI 1000 source**, auto-enabled when `digg-pp-cli` is on PATH ([#370](https://github.com/mvanhorn/peter-wanna-know-skill/pull/370)). Surfaces curated story clusters from the AI 1000 leaderboard and pulls attributable X-post quotes into the brief.
 
 **Configuration knobs**
 
-- `EXCLUDE_SOURCES` env var — the inverse of `INCLUDE_SOURCES`, honored in source count and pipeline filter ([#399](https://github.com/mvanhorn/last30days-skill/pull/399)).
-- `LAST30DAYS_YOUTUBE_SSH_HOST` — opt-in SSH routing for `yt-dlp` through a residential-IP host, for users on datacenter VPS hit by YouTube's bot-wall ([#376](https://github.com/mvanhorn/last30days-skill/pull/376)). Host validated against `^[a-zA-Z0-9._-]+$` to reject SSH option-injection. Transcript path unchanged (uses HTTP fallback).
-- macOS Keychain as a credential source — reads from the system keychain when env vars and config files aren't set ([#407](https://github.com/mvanhorn/last30days-skill/pull/407)).
-- Configuration enablement: env-var defaults and source-resilience patterns across the config layer ([#344](https://github.com/mvanhorn/last30days-skill/pull/344)).
+- `EXCLUDE_SOURCES` env var — the inverse of `INCLUDE_SOURCES`, honored in source count and pipeline filter ([#399](https://github.com/mvanhorn/peter-wanna-know-skill/pull/399)).
+- `LAST30DAYS_YOUTUBE_SSH_HOST` — opt-in SSH routing for `yt-dlp` through a residential-IP host, for users on datacenter VPS hit by YouTube's bot-wall ([#376](https://github.com/mvanhorn/peter-wanna-know-skill/pull/376)). Host validated against `^[a-zA-Z0-9._-]+$` to reject SSH option-injection. Transcript path unchanged (uses HTTP fallback).
+- macOS Keychain as a credential source — reads from the system keychain when env vars and config files aren't set ([#407](https://github.com/mvanhorn/peter-wanna-know-skill/pull/407)).
+- Configuration enablement: env-var defaults and source-resilience patterns across the config layer ([#344](https://github.com/mvanhorn/peter-wanna-know-skill/pull/344)).
 
 **Pipeline and storage**
 
-- Reddit URL auto-enrichment from web search via the public JSON API ([#366](https://github.com/mvanhorn/last30days-skill/pull/366)).
-- Per-run finding sightings recorded in the SQLite store ([#373](https://github.com/mvanhorn/last30days-skill/pull/373)).
-- Brave browser support for X/Twitter cookie extraction ([#320](https://github.com/mvanhorn/last30days-skill/pull/320)).
+- Reddit URL auto-enrichment from web search via the public JSON API ([#366](https://github.com/mvanhorn/peter-wanna-know-skill/pull/366)).
+- Per-run finding sightings recorded in the SQLite store ([#373](https://github.com/mvanhorn/peter-wanna-know-skill/pull/373)).
+- Brave browser support for X/Twitter cookie extraction ([#320](https://github.com/mvanhorn/peter-wanna-know-skill/pull/320)).
 
 **Tests and CI**
 
-- Full pytest suite restored to CI; 13 rotted tests repaired ([#416](https://github.com/mvanhorn/last30days-skill/pull/416)).
-- `greptile.json` added with `triggerOnUpdates` + `statusCheck` ([#418](https://github.com/mvanhorn/last30days-skill/pull/418)).
-- Advisory security workflow ([#368](https://github.com/mvanhorn/last30days-skill/pull/368)).
-- Parallel grounding backend test coverage ([#355](https://github.com/mvanhorn/last30days-skill/pull/355)).
+- Full pytest suite restored to CI; 13 rotted tests repaired ([#416](https://github.com/mvanhorn/peter-wanna-know-skill/pull/416)).
+- `greptile.json` added with `triggerOnUpdates` + `statusCheck` ([#418](https://github.com/mvanhorn/peter-wanna-know-skill/pull/418)).
+- Advisory security workflow ([#368](https://github.com/mvanhorn/peter-wanna-know-skill/pull/368)).
+- Parallel grounding backend test coverage ([#355](https://github.com/mvanhorn/peter-wanna-know-skill/pull/355)).
 
 **Docs**
 
-- New `CONFIGURATION.md` with README pointers ([#339](https://github.com/mvanhorn/last30days-skill/pull/339)).
-- `docs/solutions/` learning capture for release-time consistency-test cascades ([#413](https://github.com/mvanhorn/last30days-skill/pull/413)) and the eval-not-in-CI design decision ([#417](https://github.com/mvanhorn/last30days-skill/pull/417)).
+- New `CONFIGURATION.md` with README pointers ([#339](https://github.com/mvanhorn/peter-wanna-know-skill/pull/339)).
+- `docs/solutions/` learning capture for release-time consistency-test cascades ([#413](https://github.com/mvanhorn/peter-wanna-know-skill/pull/413)) and the eval-not-in-CI design decision ([#417](https://github.com/mvanhorn/peter-wanna-know-skill/pull/417)).
 
 ### Changed
 
 **Install story modernized**
 
-- `npx skills add` is now the canonical install path for every harness ([#405](https://github.com/mvanhorn/last30days-skill/pull/405)). README and SKILL.md flipped to recommend `npx skills add . -g -y` over per-harness manual instructions. Surfaces Gemini CLI, Copilot, Windsurf, and 50+ other Agent Skills hosts that the install pattern reaches.
+- `npx skills add` is now the canonical install path for every harness ([#405](https://github.com/mvanhorn/peter-wanna-know-skill/pull/405)). README and SKILL.md flipped to recommend `npx skills add . -g -y` over per-harness manual instructions. Surfaces Gemini CLI, Copilot, Windsurf, and 50+ other Agent Skills hosts that the install pattern reaches.
 - README dropped the Gemini CLI native-extension install path (now covered by `npx skills add`).
-- `hooks.json` made polyglot for Gemini CLI + Claude Code compatibility ([#318](https://github.com/mvanhorn/last30days-skill/pull/318)).
+- `hooks.json` made polyglot for Gemini CLI + Claude Code compatibility ([#318](https://github.com/mvanhorn/peter-wanna-know-skill/pull/318)).
 
 **Skill semantics and multi-harness reframe**
 
-- `AGENTS.md` is now canonical; `CLAUDE.md` points at it ([#410](https://github.com/mvanhorn/last30days-skill/pull/410)). Reframes the project as a multi-harness Agent Skills package rather than a Claude-Code-specific tool.
-- SKILL.md path resolution rewritten: STEP 0 narrows to a Claude-Code-marketplaces-only stale-clone guard; Step 1 walks a single `SKILL_DIR` substitution pattern ([#400](https://github.com/mvanhorn/last30days-skill/pull/400), [#409](https://github.com/mvanhorn/last30days-skill/pull/409)). Removes ~80 lines of bash and fixes a real spec-vs-engine divergence where the previous resolver could pick a different install than the SKILL.md the model loaded from.
-- SKILL.md version regex consolidated into `lib/skill_meta.py` ([#412](https://github.com/mvanhorn/last30days-skill/pull/412)).
-- `--plan` / `--competitors-plan` invocation templates switched from inline single-quoted JSON to heredoc-written tmpfiles ([#404](https://github.com/mvanhorn/last30days-skill/pull/404), fixes [#403](https://github.com/mvanhorn/last30days-skill/issues/403)). Apostrophes in resolved context strings ("McDonald's", "people's choice") no longer break shell parsing.
+- `AGENTS.md` is now canonical; `CLAUDE.md` points at it ([#410](https://github.com/mvanhorn/peter-wanna-know-skill/pull/410)). Reframes the project as a multi-harness Agent Skills package rather than a Claude-Code-specific tool.
+- SKILL.md path resolution rewritten: STEP 0 narrows to a Claude-Code-marketplaces-only stale-clone guard; Step 1 walks a single `SKILL_DIR` substitution pattern ([#400](https://github.com/mvanhorn/peter-wanna-know-skill/pull/400), [#409](https://github.com/mvanhorn/peter-wanna-know-skill/pull/409)). Removes ~80 lines of bash and fixes a real spec-vs-engine divergence where the previous resolver could pick a different install than the SKILL.md the model loaded from.
+- SKILL.md version regex consolidated into `lib/skill_meta.py` ([#412](https://github.com/mvanhorn/peter-wanna-know-skill/pull/412)).
+- `--plan` / `--competitors-plan` invocation templates switched from inline single-quoted JSON to heredoc-written tmpfiles ([#404](https://github.com/mvanhorn/peter-wanna-know-skill/pull/404), fixes [#403](https://github.com/mvanhorn/peter-wanna-know-skill/issues/403)). Apostrophes in resolved context strings ("McDonald's", "people's choice") no longer break shell parsing.
 - `POSTS_PER_CLUSTER` raised 3→5 and render-side display limit 2→3 to match the per-source enrichment caps used by Reddit, HN, YouTube, TikTok, and GitHub. The previous caps routinely truncated cluster context.
-- Digg AI 1000 renamed to "Digg" in user-facing output ([#372](https://github.com/mvanhorn/last30days-skill/pull/372)) — footer line, source label, inline-quote suffix, why_relevant, container attribution. Internal references retain the upstream product name.
-- GitHub repo resolution canonicalized for ambiguous product comparisons ([#302](https://github.com/mvanhorn/last30days-skill/pull/302)).
+- Digg AI 1000 renamed to "Digg" in user-facing output ([#372](https://github.com/mvanhorn/peter-wanna-know-skill/pull/372)) — footer line, source label, inline-quote suffix, why_relevant, container attribution. Internal references retain the upstream product name.
+- GitHub repo resolution canonicalized for ambiguous product comparisons ([#302](https://github.com/mvanhorn/peter-wanna-know-skill/pull/302)).
 
 **Dependencies and tooling**
 
-- Dropped `requests` runtime dependency. All providers route through stdlib `urllib` via the `lib/http` wrapper ([#393](https://github.com/mvanhorn/last30days-skill/pull/393)).
-- Migrated to `gemini-3.1-flash-lite` GA model ([#378](https://github.com/mvanhorn/last30days-skill/pull/378)).
-- Aligned Codex/Claude plugin manifests + added Codex `AGENTS.md` ([#321](https://github.com/mvanhorn/last30days-skill/pull/321)).
-- pytest dev dep bumped 9.0.2 → 9.0.3 ([#414](https://github.com/mvanhorn/last30days-skill/pull/414)).
+- Dropped `requests` runtime dependency. All providers route through stdlib `urllib` via the `lib/http` wrapper ([#393](https://github.com/mvanhorn/peter-wanna-know-skill/pull/393)).
+- Migrated to `gemini-3.1-flash-lite` GA model ([#378](https://github.com/mvanhorn/peter-wanna-know-skill/pull/378)).
+- Aligned Codex/Claude plugin manifests + added Codex `AGENTS.md` ([#321](https://github.com/mvanhorn/peter-wanna-know-skill/pull/321)).
+- pytest dev dep bumped 9.0.2 → 9.0.3 ([#414](https://github.com/mvanhorn/peter-wanna-know-skill/pull/414)).
 
 ### Removed
 
-- **BREAKING for Codex native-plugin users:** `.codex-plugin/plugin.json` and the matching SKILL_ROOT resolver branch in SKILL.md Step 1 ([#400](https://github.com/mvanhorn/last30days-skill/pull/400)). Codex users should install via `npx skills add mvanhorn/last30days-skill` or copy the skill to `~/.codex/skills/last30days/`.
-- **`skills/last30days/scripts/sync.sh`** — maintainer dev-deploy script ([#405](https://github.com/mvanhorn/last30days-skill/pull/405)). Replaced by `npx skills add . -g -y` (live-symlink into every detected harness's skill dir — better than sync.sh's copy model since edits propagate live). Hermes uses `hermes skills install mvanhorn/last30days-skill --force`; OpenClaw uses `clawhub install last30days-official`.
-- Orphaned `SPEC.md` and `TASKS.md` ([#419](https://github.com/mvanhorn/last30days-skill/pull/419)).
+- **BREAKING for Codex native-plugin users:** `.codex-plugin/plugin.json` and the matching SKILL_ROOT resolver branch in SKILL.md Step 1 ([#400](https://github.com/mvanhorn/peter-wanna-know-skill/pull/400)). Codex users should install via `npx skills add mvanhorn/peter-wanna-know-skill` or copy the skill to `~/.codex/skills/peter-wanna-know/`.
+- **`skills/peter-wanna-know/scripts/sync.sh`** — maintainer dev-deploy script ([#405](https://github.com/mvanhorn/peter-wanna-know-skill/pull/405)). Replaced by `npx skills add . -g -y` (live-symlink into every detected harness's skill dir — better than sync.sh's copy model since edits propagate live). Hermes uses `hermes skills install mvanhorn/peter-wanna-know-skill --force`; OpenClaw uses `clawhub install peter-wanna-know-official`.
+- Orphaned `SPEC.md` and `TASKS.md` ([#419](https://github.com/mvanhorn/peter-wanna-know-skill/pull/419)).
 
 ### Fixed
 
@@ -89,55 +89,55 @@ A week-long shipping cycle: ~75 PRs merged plus 7 community fixes salvaged throu
 **Windows compatibility**
 
 - `os.killpg` in `_cleanup_children()` guarded with `hasattr(os, "killpg")`, falls back to `os.kill(SIGTERM)` (gujishh, salvaged from #226).
-- POSIX-style secret-permission warning skipped on Windows ([#357](https://github.com/mvanhorn/last30days-skill/pull/357)).
-- Render uses forward slashes in save-path footer for Windows ([#338](https://github.com/mvanhorn/last30days-skill/pull/338)).
+- POSIX-style secret-permission warning skipped on Windows ([#357](https://github.com/mvanhorn/peter-wanna-know-skill/pull/357)).
+- Render uses forward slashes in save-path footer for Windows ([#338](https://github.com/mvanhorn/peter-wanna-know-skill/pull/338)).
 
 **xAI / X / xurl**
 
 - `parse_x_response` now raises `http.HTTPError` on empty output, missing JSON, or decode failure — surfaces in `errors_by_source` instead of silently returning an empty result list (Kaustav Mishra, salvaged from #155).
-- `xurl` treats `PermissionError` from PATH lookup as unavailable ([#322](https://github.com/mvanhorn/last30days-skill/pull/322)).
+- `xurl` treats `PermissionError` from PATH lookup as unavailable ([#322](https://github.com/mvanhorn/peter-wanna-know-skill/pull/322)).
 
 **YouTube**
 
-- SC YouTube + multi-token HN searches unblocked ([#388](https://github.com/mvanhorn/last30days-skill/pull/388)).
-- Transcript-fetch ratio surfaced + degraded-run nudge for stale `yt-dlp` ([#340](https://github.com/mvanhorn/last30days-skill/pull/340)).
+- SC YouTube + multi-token HN searches unblocked ([#388](https://github.com/mvanhorn/peter-wanna-know-skill/pull/388)).
+- Transcript-fetch ratio surfaced + degraded-run nudge for stale `yt-dlp` ([#340](https://github.com/mvanhorn/peter-wanna-know-skill/pull/340)).
 
 **bird_x / HTTP**
 
-- Subprocess retry on non-JSON stdout to handle X anti-bot HTML interstitials ([#383](https://github.com/mvanhorn/last30days-skill/pull/383)).
-- HTTP retry budget expanded + exponential backoff on DNS resolution failure ([#382](https://github.com/mvanhorn/last30days-skill/pull/382)).
-- Parallel AI search aligned with current API schema ([#341](https://github.com/mvanhorn/last30days-skill/pull/341)).
-- Parallel web backend routed through grounding ([#354](https://github.com/mvanhorn/last30days-skill/pull/354)).
+- Subprocess retry on non-JSON stdout to handle X anti-bot HTML interstitials ([#383](https://github.com/mvanhorn/peter-wanna-know-skill/pull/383)).
+- HTTP retry budget expanded + exponential backoff on DNS resolution failure ([#382](https://github.com/mvanhorn/peter-wanna-know-skill/pull/382)).
+- Parallel AI search aligned with current API schema ([#341](https://github.com/mvanhorn/peter-wanna-know-skill/pull/341)).
+- Parallel web backend routed through grounding ([#354](https://github.com/mvanhorn/peter-wanna-know-skill/pull/354)).
 
 **Planner and sources**
 
-- `xquik` registered in `SOURCE_CAPABILITIES` ([#336](https://github.com/mvanhorn/last30days-skill/pull/336), fixes [#319](https://github.com/mvanhorn/last30days-skill/issues/319)).
-- Honor explicit optional source requests ([#356](https://github.com/mvanhorn/last30days-skill/pull/356)).
-- ScrapeCreators source-gating aligned between code and docs ([#415](https://github.com/mvanhorn/last30days-skill/pull/415)).
-- OpenClaw works without ScrapeCreators key ([#392](https://github.com/mvanhorn/last30days-skill/pull/392), by @thinkun).
+- `xquik` registered in `SOURCE_CAPABILITIES` ([#336](https://github.com/mvanhorn/peter-wanna-know-skill/pull/336), fixes [#319](https://github.com/mvanhorn/peter-wanna-know-skill/issues/319)).
+- Honor explicit optional source requests ([#356](https://github.com/mvanhorn/peter-wanna-know-skill/pull/356)).
+- ScrapeCreators source-gating aligned between code and docs ([#415](https://github.com/mvanhorn/peter-wanna-know-skill/pull/415)).
+- OpenClaw works without ScrapeCreators key ([#392](https://github.com/mvanhorn/peter-wanna-know-skill/pull/392), by @thinkun).
 
 **Render, version display, hosting paths**
 
-- Hardcoded `v3.0.0` in render replaced with dynamic `_skill_version()` ([#365](https://github.com/mvanhorn/last30days-skill/pull/365)).
-- Comparison HTML artifacts saved correctly ([#389](https://github.com/mvanhorn/last30days-skill/pull/389)).
-- `OPENROUTER_DEFAULT` model ID corrected ([#323](https://github.com/mvanhorn/last30days-skill/pull/323)).
-- OpenClaw poll-timing initialized once ([#358](https://github.com/mvanhorn/last30days-skill/pull/358)).
-- Prefer sandboxed Safari cookie path ([#343](https://github.com/mvanhorn/last30days-skill/pull/343)).
-- Preserve clean mode for last-run state ([#334](https://github.com/mvanhorn/last30days-skill/pull/334)).
+- Hardcoded `v3.0.0` in render replaced with dynamic `_skill_version()` ([#365](https://github.com/mvanhorn/peter-wanna-know-skill/pull/365)).
+- Comparison HTML artifacts saved correctly ([#389](https://github.com/mvanhorn/peter-wanna-know-skill/pull/389)).
+- `OPENROUTER_DEFAULT` model ID corrected ([#323](https://github.com/mvanhorn/peter-wanna-know-skill/pull/323)).
+- OpenClaw poll-timing initialized once ([#358](https://github.com/mvanhorn/peter-wanna-know-skill/pull/358)).
+- Prefer sandboxed Safari cookie path ([#343](https://github.com/mvanhorn/peter-wanna-know-skill/pull/343)).
+- Preserve clean mode for last-run state ([#334](https://github.com/mvanhorn/peter-wanna-know-skill/pull/334)).
 - Replaced hardcoded `/Users/mvanhorn/...` paths in `test-v1-vs-v2.sh` with portable env-var overrides (Dave Morin, salvaged from #297).
 
 **Hooks**
 
-- `check-config.sh` path-quoting fix for paths with spaces ([#337](https://github.com/mvanhorn/last30days-skill/pull/337)).
-- Replaced unsafe `eval` with `declare` in `check-config.sh` ([#364](https://github.com/mvanhorn/last30days-skill/pull/364)).
+- `check-config.sh` path-quoting fix for paths with spaces ([#337](https://github.com/mvanhorn/peter-wanna-know-skill/pull/337)).
+- Replaced unsafe `eval` with `declare` in `check-config.sh` ([#364](https://github.com/mvanhorn/peter-wanna-know-skill/pull/364)).
 
 **Sync and version metadata**
 
-- `sync.sh` pointed at this repo's plugin cache, not the private repo's ([#402](https://github.com/mvanhorn/last30days-skill/pull/402)).
-- Sync cache target bumped to 3.2.1 to match SKILL.md ([#397](https://github.com/mvanhorn/last30days-skill/pull/397)).
-- ScrapeCreators free-tier credit count corrected to 100 in docs ([#369](https://github.com/mvanhorn/last30days-skill/pull/369), fixes [#367](https://github.com/mvanhorn/last30days-skill/issues/367)).
-- Gemini extension version synced ([#349](https://github.com/mvanhorn/last30days-skill/pull/349)).
-- Various stale path/link fixes ([#345](https://github.com/mvanhorn/last30days-skill/pull/345), [#346](https://github.com/mvanhorn/last30days-skill/pull/346), [#347](https://github.com/mvanhorn/last30days-skill/pull/347), [#348](https://github.com/mvanhorn/last30days-skill/pull/348), [#351](https://github.com/mvanhorn/last30days-skill/pull/351)).
+- `sync.sh` pointed at this repo's plugin cache, not the private repo's ([#402](https://github.com/mvanhorn/peter-wanna-know-skill/pull/402)).
+- Sync cache target bumped to 3.2.1 to match SKILL.md ([#397](https://github.com/mvanhorn/peter-wanna-know-skill/pull/397)).
+- ScrapeCreators free-tier credit count corrected to 100 in docs ([#369](https://github.com/mvanhorn/peter-wanna-know-skill/pull/369), fixes [#367](https://github.com/mvanhorn/peter-wanna-know-skill/issues/367)).
+- Gemini extension version synced ([#349](https://github.com/mvanhorn/peter-wanna-know-skill/pull/349)).
+- Various stale path/link fixes ([#345](https://github.com/mvanhorn/peter-wanna-know-skill/pull/345), [#346](https://github.com/mvanhorn/peter-wanna-know-skill/pull/346), [#347](https://github.com/mvanhorn/peter-wanna-know-skill/pull/347), [#348](https://github.com/mvanhorn/peter-wanna-know-skill/pull/348), [#351](https://github.com/mvanhorn/peter-wanna-know-skill/pull/351)).
 
 ### Contributors
 
@@ -150,9 +150,9 @@ First-time contributors whose fixes shipped in this release (most via PR triage 
 - Franco Carballar — Reddit browser-like headers
 - Jonathan Oppenheim — Reddit 402 fallback chain
 - Kaustav Mishra — xAI error surfacing
-- [@thinkun](https://github.com/thinkun) ([#363](https://github.com/mvanhorn/last30days-skill/pull/363)) — OpenClaw ScrapeCreators-key-optional fix
+- [@thinkun](https://github.com/thinkun) ([#363](https://github.com/mvanhorn/peter-wanna-know-skill/pull/363)) — OpenClaw ScrapeCreators-key-optional fix
 
-Full PR list at [github.com/mvanhorn/last30days-skill/releases/tag/v3.3.0](https://github.com/mvanhorn/last30days-skill/releases/tag/v3.3.0).
+Full PR list at [github.com/mvanhorn/peter-wanna-know-skill/releases/tag/v3.3.0](https://github.com/mvanhorn/peter-wanna-know-skill/releases/tag/v3.3.0).
 
 ## [3.2.0] - 2026-05-09
 
@@ -165,8 +165,8 @@ Full PR list at [github.com/mvanhorn/last30days-skill/releases/tag/v3.3.0](https
 
 ### Fixed
 
-- **Codex plugin layout.** Move the canonical runtime payload under `skills/last30days/` and update Codex/Claude plugin metadata and tests for the relocated engine path.
-- **Claude Code cache resolution.** Resolve Claude plugin installs to `skills/last30days/scripts/last30days.py` after the plugin-layout restructure.
+- **Codex plugin layout.** Move the canonical runtime payload under `skills/peter-wanna-know/` and update Codex/Claude plugin metadata and tests for the relocated engine path.
+- **Claude Code cache resolution.** Resolve Claude plugin installs to `skills/peter-wanna-know/scripts/peter-wanna-know.py` after the plugin-layout restructure.
 
 ## [3.1.0] - 2026-04-22
 
@@ -174,12 +174,12 @@ Consolidates the 3.0.10 to 3.0.14 dev cycle (commenter handles, `--competitors`,
 
 ### Added
 
-- **OpenClaw republish.** `clawhub install last30days-official` now resolves to `3.1.0-open`, matching current main. Closes [#307](https://github.com/mvanhorn/last30days-skill/issues/307), [#195](https://github.com/mvanhorn/last30days-skill/issues/195), [#236](https://github.com/mvanhorn/last30days-skill/issues/236). The ClawHub bundle had shipped a broken `env.py get_config()` and stale SKILL.md path references since April; both are fixed at source on main and the republish carries the fixes to installers.
+- **OpenClaw republish.** `clawhub install peter-wanna-know-official` now resolves to `3.1.0-open`, matching current main. Closes [#307](https://github.com/mvanhorn/peter-wanna-know-skill/issues/307), [#195](https://github.com/mvanhorn/peter-wanna-know-skill/issues/195), [#236](https://github.com/mvanhorn/peter-wanna-know-skill/issues/236). The ClawHub bundle had shipped a broken `env.py get_config()` and stale SKILL.md path references since April; both are fixed at source on main and the republish carries the fixes to installers.
 
 ### Fixed
 
-- **Claude Code plugin manifest path-escape.** The `.claude-plugin/plugin.json` `skills` key was removed in commit `93fbed2` but never shipped in a tagged release. Installing via `/plugin install last30days-skill` could hit `/doctor`'s `Path escapes plugin directory: ./ (skills)` error. This release ships the fix. Closes [#306](https://github.com/mvanhorn/last30days-skill/issues/306).
-- **Broken README link.** The README's "source of truth" link pointed at root `SKILL.md`, which is no longer maintained after the plugin-layout restructure. Fixed to point at `skills/last30days/SKILL.md`.
+- **Claude Code plugin manifest path-escape.** The `.claude-plugin/plugin.json` `skills` key was removed in commit `93fbed2` but never shipped in a tagged release. Installing via `/plugin install peter-wanna-know-skill` could hit `/doctor`'s `Path escapes plugin directory: ./ (skills)` error. This release ships the fix. Closes [#306](https://github.com/mvanhorn/peter-wanna-know-skill/issues/306).
+- **Broken README link.** The README's "source of truth" link pointed at root `SKILL.md`, which is no longer maintained after the plugin-layout restructure. Fixed to point at `skills/peter-wanna-know/SKILL.md`.
 
 ### Dev cycle journal (3.0.10 - 3.0.14, not separately tagged)
 
@@ -189,13 +189,13 @@ Individual changelog entries for 3.0.10 through 3.0.14 below document the increm
 
 ### Changed
 
-- **Comparison-mode title attribution.** The synthesis title for vs-mode and `--competitors` outputs changes from `What the Community Says (Last 30 Days)` to `What the Community Says (/Last30Days)`. Surfaces the slash-command identity instead of restating the date range. Three SKILL.md occurrences updated; pure documentation change.
+- **Comparison-mode title attribution.** The synthesis title for vs-mode and `--competitors` outputs changes from `What the Community Says (Last 30 Days)` to `What the Community Says (/peter-wanna-know)`. Surfaces the slash-command identity instead of restating the date range. Three SKILL.md occurrences updated; pure documentation change.
 
 ## [3.0.13] - 2026-04-22
 
 ### Changed
 
-- **vs mode runs N full passes in parallel, one per entity.** Architectural revert of the 3-pass → 1-pass latency optimization from an earlier version. `/last30days "OpenAI vs Anthropic vs xAI"` now runs three full `pipeline.run()` calls in parallel via the same fanout `--competitors` uses, producing three `*-raw.md` save files plus a merged comparison output. Each entity gets its own Step 0.55-grade targeting, own primary X handle weight, own subreddit scoping — apples-to-apples depth instead of the one-pool merged retrieval the single-pass path produced. Parallel execution keeps wall clock ≈ single pass.
+- **vs mode runs N full passes in parallel, one per entity.** Architectural revert of the 3-pass → 1-pass latency optimization from an earlier version. `/peter-wanna-know "OpenAI vs Anthropic vs xAI"` now runs three full `pipeline.run()` calls in parallel via the same fanout `--competitors` uses, producing three `*-raw.md` save files plus a merged comparison output. Each entity gets its own Step 0.55-grade targeting, own primary X handle weight, own subreddit scoping — apples-to-apples depth instead of the one-pool merged retrieval the single-pass path produced. Parallel execution keeps wall clock ≈ single pass.
 - **`--competitors` is now a SKILL.md-level shortcut for vs-mode with auto-discovery.** The hosting reasoning model (Claude Code, Codex, Hermes, Gemini, any agent with WebSearch) performs discovery and Step 0.55 per entity via its own WebSearch tool, then invokes the engine with a vs-topic and `--competitors-plan` JSON. The engine flag remains for headless/cron use with BRAVE/EXA/SERPER/PARALLEL/OPENROUTER keys (engine-internal `auto_resolve` stays as fallback).
 - **LAW 7-style stderr for `--competitors` with no backend** now leads with the hosting-model path (WebSearch + Step 0.55 + `--competitors-plan`) instead of `BRAVE_API_KEY`. API-key framing moved to a secondary "headless" section.
 
@@ -216,7 +216,7 @@ Individual changelog entries for 3.0.10 through 3.0.14 below document the increm
 
 - **Per-entity Step 0.55 resolution for competitor sub-runs.** In 3.0.11, only the main topic got X handle / subreddit / GitHub resolution; competitor sub-runs ran with planner defaults and produced visibly thinner evidence (Reddit 403 fallbacks, single-word queries). Each competitor sub-run now calls `resolve.auto_resolve()` inside `fanout.run_competitor_fanout` when a web backend is available, mirroring the main topic's pre-flight resolution. Per-entity X handle, subreddit list, GitHub user/repos, and news context are threaded into each sub-run's `pipeline.run()` call. Deep-copied config per sub-run prevents `_auto_resolve_context` cross-leak. Surfaces in a new `## Resolved Entities` output block so the resolution coverage is visible without reading stderr.
 - **LAW 7 false-positive on internal fan-out sub-runs.** Each competitor sub-run was emitting the `[Planner] No --plan passed... YOU ARE the planner` stderr warning. LAW 7 targets the hosting-reasoning-model path, not engine-internal fan-out. New `internal_subrun=True` keyword on `planner.plan_query` and `pipeline.run` suppresses the warning for sub-runs only; the default path is unchanged.
-- **Marketplace-stale SKILL.md trap.** Added a STEP 0 canonical-path self-check at the top of SKILL.md. Two of three 2026-04-22 test runs loaded SKILL.md from `plugins/marketplaces/last30days-skill/` (Claude-Code-managed git clone pinned to origin/main, lagging the versioned cache), then ran `--help` against the same stale path, did not see `--competitors`, and fell back to a manual comparison plan. The STEP 0 block forces any reader to verify they loaded from `plugins/cache/last30days-skill/last30days/{VERSION}/SKILL.md` and re-read from the versioned cache if not.
+- **Marketplace-stale SKILL.md trap.** Added a STEP 0 canonical-path self-check at the top of SKILL.md. Two of three 2026-04-22 test runs loaded SKILL.md from `plugins/marketplaces/peter-wanna-know-skill/` (Claude-Code-managed git clone pinned to origin/main, lagging the versioned cache), then ran `--help` against the same stale path, did not see `--competitors`, and fell back to a manual comparison plan. The STEP 0 block forces any reader to verify they loaded from `plugins/cache/peter-wanna-know-skill/peter-wanna-know/{VERSION}/SKILL.md` and re-read from the versioned cache if not.
 
 ### Changed
 
@@ -230,7 +230,7 @@ Individual changelog entries for 3.0.10 through 3.0.14 below document the increm
 
 ### Added
 
-- **`--competitors` flag for auto-discovered comparison fan-out.** Pass `--competitors` on a single-entity topic and the engine discovers 2-6 peer entities via web search, then runs the full pipeline on each in parallel and emits one N-way comparison. `last30days Kanye West --competitors` resolves Drake, Kendrick Lamar, and one more peer. `last30days OpenAI --competitors` resolves Anthropic, xAI, Google Gemini. `--competitors=N` controls count, `--competitors-list="A,B,C"` skips discovery and uses the explicit list. Discovery mirrors the `auto_resolve` pattern (Brave / Exa / Serper / Parallel) with deterministic text extraction - no internal LLM call. Sub-runs inherit the main `--quick`/`--deep`/`--days`, run in a `ThreadPoolExecutor`, and degrade gracefully when at least 2 entities survive. Output reuses the existing 9-axis `## Head-to-Head` scaffold.
+- **`--competitors` flag for auto-discovered comparison fan-out.** Pass `--competitors` on a single-entity topic and the engine discovers 2-6 peer entities via web search, then runs the full pipeline on each in parallel and emits one N-way comparison. `peter-wanna-know Kanye West --competitors` resolves Drake, Kendrick Lamar, and one more peer. `peter-wanna-know OpenAI --competitors` resolves Anthropic, xAI, Google Gemini. `--competitors=N` controls count, `--competitors-list="A,B,C"` skips discovery and uses the explicit list. Discovery mirrors the `auto_resolve` pattern (Brave / Exa / Serper / Parallel) with deterministic text extraction - no internal LLM call. Sub-runs inherit the main `--quick`/`--deep`/`--days`, run in a `ThreadPoolExecutor`, and degrade gracefully when at least 2 entities survive. Output reuses the existing 9-axis `## Head-to-Head` scaffold.
 
 ## [3.0.10] - 2026-04-21
 
@@ -241,7 +241,7 @@ Individual changelog entries for 3.0.10 through 3.0.14 below document the increm
 ### Fixed
 
 - **TikTok author preference.** `_fetch_post_comments` in `scripts/lib/tiktok.py` preferred `user.nickname` over `user.unique_id`, so the engine captured display names ("Moosa Noormahomed") instead of @handles ("moosanoormahomed"). Flipped to prefer `unique_id`. Nickname still wins as a fallback when `unique_id` is missing. Display names can contain emoji, spaces, and non-Latin characters that do not round-trip to a profile URL; the @handle is the stable identifier.
-- **Single plugin payload layout.** The canonical runtime moved to `skills/last30days/` for both Claude Code and Codex plugin loading. Root-level `SKILL.md`, `scripts/`, `agents/`, and `assets/` are no longer maintained as duplicate copies.
+- **Single plugin payload layout.** The canonical runtime moved to `skills/peter-wanna-know/` for both Claude Code and Codex plugin loading. Root-level `SKILL.md`, `scripts/`, `agents/`, and `assets/` are no longer maintained as duplicate copies.
 
 ### Behavior fallback
 
@@ -258,33 +258,33 @@ v3.0.9 adds the engine-side Class 1 keyword-trap refuse-gate ("birthday gift for
 ### Added
 
 - **Engine Class 1 keyword-trap refuse-gate** (`scripts/lib/preflight.py`, new). Pattern-matches demographic-shopping queries at main() front-door. Exit code 2 with structured REFUSE message. Escape hatch: `LAST30DAYS_SKIP_PREFLIGHT=1`. 29 tests in `tests/test_preflight.py`.
-- **TikTok + YouTube top comments** rendered with same `💬 Top comment` prominence as Reddit's. Shipped in [#260](https://github.com/mvanhorn/last30days-skill/pull/260); enrichment fixed in [#265](https://github.com/mvanhorn/last30days-skill/pull/265).
-- **Hermes AI Agent as a deploy target** - thanks @stephenmcconnachie ([#228](https://github.com/mvanhorn/last30days-skill/pull/228)). `scripts/sync.sh` detects `~/.hermes/skills/research` and deploys automatically.
-- **Multi-key SCRAPECREATORS_API_KEY rotation** - thanks @zaydiscold ([#268](https://github.com/mvanhorn/last30days-skill/pull/268)). Set `SCRAPECREATORS_API_KEY_1`, `_2`, etc. Engine rotates on rate-limit.
-- **Offline quality evaluation fixture** - thanks @j-sperling ([#233](https://github.com/mvanhorn/last30days-skill/pull/233)). `eval_topics.json` lets contributors run quality regressions without burning live API credits.
+- **TikTok + YouTube top comments** rendered with same `💬 Top comment` prominence as Reddit's. Shipped in [#260](https://github.com/mvanhorn/peter-wanna-know-skill/pull/260); enrichment fixed in [#265](https://github.com/mvanhorn/peter-wanna-know-skill/pull/265).
+- **Hermes AI Agent as a deploy target** - thanks @stephenmcconnachie ([#228](https://github.com/mvanhorn/peter-wanna-know-skill/pull/228)). `scripts/sync.sh` detects `~/.hermes/skills/research` and deploys automatically.
+- **Multi-key SCRAPECREATORS_API_KEY rotation** - thanks @zaydiscold ([#268](https://github.com/mvanhorn/peter-wanna-know-skill/pull/268)). Set `SCRAPECREATORS_API_KEY_1`, `_2`, etc. Engine rotates on rate-limit.
+- **Offline quality evaluation fixture** - thanks @j-sperling ([#233](https://github.com/mvanhorn/peter-wanna-know-skill/pull/233)). `eval_topics.json` lets contributors run quality regressions without burning live API credits.
 - **END-OF-CANONICAL-OUTPUT boundary** in `render_compact()`. Engine now emits an explicit pass-through instruction so re-synthesis requires actively ignoring a visible boundary.
-- **LAW 1 verbatim-pattern override.** LAW 1 now quotes the exact WebSearch tool-result reminder ("CRITICAL REQUIREMENT: MUST include Sources: section") and declares it OVERRIDDEN inside last30days output.
+- **LAW 1 verbatim-pattern override.** LAW 1 now quotes the exact WebSearch tool-result reminder ("CRITICAL REQUIREMENT: MUST include Sources: section") and declares it OVERRIDDEN inside peter-wanna-know output.
 
 ### Changed
 
 - **SKILL.md restructure.** VOICE CONTRACT LAWs and BADGE MANDATORY block moved from line 1094 to lines 75-150. Grounded in 3 separate Opus 4.7 self-debugs.
-- **Engine emits the badge as stdout.** `🌐 last30days v3.0.9 · synced YYYY-MM-DD` is the first line of every compact emit. Pass-through is now the default-correct behavior.
-- **Reddit client HTTP consolidation** - thanks @iliaal ([#207](https://github.com/mvanhorn/last30days-skill/pull/207)). Migrated to `http.get(params=...)` helper.
-- **ScrapeCreators header consolidation** - thanks @iliaal ([#209](https://github.com/mvanhorn/last30days-skill/pull/209)). `_sc_headers` refactored into `http.scrapecreators_headers`.
+- **Engine emits the badge as stdout.** `🌐 peter-wanna-know v3.0.9 · synced YYYY-MM-DD` is the first line of every compact emit. Pass-through is now the default-correct behavior.
+- **Reddit client HTTP consolidation** - thanks @iliaal ([#207](https://github.com/mvanhorn/peter-wanna-know-skill/pull/207)). Migrated to `http.get(params=...)` helper.
+- **ScrapeCreators header consolidation** - thanks @iliaal ([#209](https://github.com/mvanhorn/peter-wanna-know-skill/pull/209)). `_sc_headers` refactored into `http.scrapecreators_headers`.
 - **Simpler Hermes sync.** `scripts/sync.sh` Hermes branch now always uses main SKILL.md (previously had a `.hermes-plugin/SKILL.md` fallback that created a wrong-file-capture hazard).
 
 ### Fixed
 
 - **Peter Steinberger trailing Sources leak.** 2026-04-18 validation failure where the model appended a TechCrunch / TED / Fortune / Wikipedia Sources list after the invitation. Now structurally prevented at three layers: engine emits the canonical body, LAW 1 quotes the exact WebSearch reminder, closing boundary names the anti-pattern.
-- **Wrong-file SKILL.md capture.** Deleted `.agents/skills/last30days/SKILL.md` (1382 lines, April 13 snapshot) and `.hermes-plugin/SKILL.md` (269 lines). One SKILL.md per plugin now, at the plugin root.
-- **GitHub date parsing garbage** - thanks @iliaal ([#208](https://github.com/mvanhorn/last30days-skill/pull/208)). `_parse_date` now rejects invalid input cleanly.
-- **Windows Bird X stability** - thanks @Chelebii ([#227](https://github.com/mvanhorn/last30days-skill/pull/227)).
-- **Linux `check_perms` false-warn** - thanks @george231224 ([#216](https://github.com/mvanhorn/last30days-skill/pull/216)). Uses GNU stat first.
-- **UTF-8 saved output** - thanks @Gujiassh ([#225](https://github.com/mvanhorn/last30days-skill/pull/225)).
-- **Version metadata alignment** - thanks @Gujiassh ([#217](https://github.com/mvanhorn/last30days-skill/pull/217)) and @shalomma ([#229](https://github.com/mvanhorn/last30days-skill/pull/229)).
-- **`--days` alias backcompat** - thanks @BryanTegomoh ([#230](https://github.com/mvanhorn/last30days-skill/pull/230)).
-- **`INCLUDE_SOURCES` env default** - thanks @hnshah ([#223](https://github.com/mvanhorn/last30days-skill/pull/223)).
-- **Bird X all-None engagement** - thanks @j-sperling ([#234](https://github.com/mvanhorn/last30days-skill/pull/234)).
+- **Wrong-file SKILL.md capture.** Deleted `.agents/skills/peter-wanna-know/SKILL.md` (1382 lines, April 13 snapshot) and `.hermes-plugin/SKILL.md` (269 lines). One SKILL.md per plugin now, at the plugin root.
+- **GitHub date parsing garbage** - thanks @iliaal ([#208](https://github.com/mvanhorn/peter-wanna-know-skill/pull/208)). `_parse_date` now rejects invalid input cleanly.
+- **Windows Bird X stability** - thanks @Chelebii ([#227](https://github.com/mvanhorn/peter-wanna-know-skill/pull/227)).
+- **Linux `check_perms` false-warn** - thanks @george231224 ([#216](https://github.com/mvanhorn/peter-wanna-know-skill/pull/216)). Uses GNU stat first.
+- **UTF-8 saved output** - thanks @Gujiassh ([#225](https://github.com/mvanhorn/peter-wanna-know-skill/pull/225)).
+- **Version metadata alignment** - thanks @Gujiassh ([#217](https://github.com/mvanhorn/peter-wanna-know-skill/pull/217)) and @shalomma ([#229](https://github.com/mvanhorn/peter-wanna-know-skill/pull/229)).
+- **`--days` alias backcompat** - thanks @BryanTegomoh ([#230](https://github.com/mvanhorn/peter-wanna-know-skill/pull/230)).
+- **`INCLUDE_SOURCES` env default** - thanks @hnshah ([#223](https://github.com/mvanhorn/peter-wanna-know-skill/pull/223)).
+- **Bird X all-None engagement** - thanks @j-sperling ([#234](https://github.com/mvanhorn/peter-wanna-know-skill/pull/234)).
 
 ### Contributors
 
@@ -293,32 +293,32 @@ v3.0.9 adds the engine-side Class 1 keyword-trap refuse-gate ("birthday gift for
 ### Recovery
 
 ```
-/plugin update last30days
+/plugin update peter-wanna-know
 /reload-plugins
 ```
 
-Verify: `cat ~/.claude/plugins/cache/last30days-skill/last30days/*/.claude-plugin/plugin.json | grep version` returns `"version": "3.0.9"`.
+Verify: `cat ~/.claude/plugins/cache/peter-wanna-know-skill/peter-wanna-know/*/.claude-plugin/plugin.json | grep version` returns `"version": "3.0.9"`.
 
-Smoke test: `/last30days birthday gift for 40 year old` should ask a clarifying question before running.
+Smoke test: `/peter-wanna-know birthday gift for 40 year old` should ask a clarifying question before running.
 
 ## [3.0.5] - 2026-04-15
 
 ### Added
 
-- **`/last30days` slash command for plugin users.** New `commands/last30days.md` registers a Claude Code slash command. Users type `/last30days <topic>` and Claude Code's autocomplete prefix-matches it to the canonical `/last30days:last30days` form (the same way `/ce:plan` resolves to `/compound-engineering:ce-plan`). The command delegates to the existing `last30days` skill body — no skill behavior changes.
+- **`/peter-wanna-know` slash command for plugin users.** New `commands/peter-wanna-know.md` registers a Claude Code slash command. Users type `/peter-wanna-know <topic>` and Claude Code's autocomplete prefix-matches it to the canonical `/peter-wanna-know:peter-wanna-know` form (the same way `/ce:plan` resolves to `/compound-engineering:ce-plan`). The command delegates to the existing `peter-wanna-know` skill body — no skill behavior changes.
 
 ### Removed
 
-- **`skills/last30days-nux/`** — byte-identical duplicate of root `SKILL.md` that created confusing `/last30days:last30days-nux` autocomplete entries via Claude Code's plugin namespacing. The root `SKILL.md` remains the canonical skill source.
+- **`skills/peter-wanna-know-nux/`** — byte-identical duplicate of root `SKILL.md` that created confusing `/peter-wanna-know:peter-wanna-know-nux` autocomplete entries via Claude Code's plugin namespacing. The root `SKILL.md` remains the canonical skill source.
 
 ### Recovery
 
 ```
-/plugin update last30days
+/plugin update peter-wanna-know
 /reload-plugins
 ```
 
-Then type `/last30days <topic>` to invoke the skill via slash command. Natural-language invocation ("search the last 30 days for X") continues to work unchanged.
+Then type `/peter-wanna-know <topic>` to invoke the skill via slash command. Natural-language invocation ("search the last 30 days for X") continues to work unchanged.
 
 ## [3.0.4] - 2026-04-15
 
@@ -328,7 +328,7 @@ Then type `/last30days <topic>` to invoke the skill via slash command. Natural-l
 
 ### Recovery
 
-If `/doctor` reports a path-escape error for last30days, run `/plugin update last30days` then `/reload-plugins`. If errors persist, uninstall and reinstall the plugin.
+If `/doctor` reports a path-escape error for peter-wanna-know, run `/plugin update peter-wanna-know` then `/reload-plugins`. If errors persist, uninstall and reinstall the plugin.
 
 ## [3.0.3] - 2026-04-15
 
@@ -339,7 +339,7 @@ If `/doctor` reports a path-escape error for last30days, run `/plugin update las
 
 ### Recovery
 
-Users on v3.0.1 or v3.0.2: run `/plugin update last30days` then `/reload-plugins`. If autoUpdate is enabled, the next session start will pull v3.0.3 automatically. Users on cached v3.0.0 or earlier installs were unaffected.
+Users on v3.0.1 or v3.0.2: run `/plugin update peter-wanna-know` then `/reload-plugins`. If autoUpdate is enabled, the next session start will pull v3.0.3 automatically. Users on cached v3.0.0 or earlier installs were unaffected.
 
 ### Notes
 
@@ -350,12 +350,12 @@ Users on v3.0.1 or v3.0.2: run `/plugin update last30days` then `/reload-plugins
 
 ### Fixed
 
-- **`/last30days` slash command now registers on Claude Code v2.1.105+.** `.claude-plugin/plugin.json` declared `"skills": ["./"]`, which newer Claude Code rejects with `Path escapes plugin directory: ./ (skills)`. The skill silently failed to register, so `/last30days <query>` returned "Unknown command" even though `/plugin list` showed the plugin as installed. Fix: `"skills": ["skills"]` so the loader scans the real skill subdirectory.
+- **`/peter-wanna-know` slash command now registers on Claude Code v2.1.105+.** `.claude-plugin/plugin.json` declared `"skills": ["./"]`, which newer Claude Code rejects with `Path escapes plugin directory: ./ (skills)`. The skill silently failed to register, so `/peter-wanna-know <query>` returned "Unknown command" even though `/plugin list` showed the plugin as installed. Fix: `"skills": ["skills"]` so the loader scans the real skill subdirectory.
 - **Version drift between manifests.** `.claude-plugin/marketplace.json` was pinned to `3.0.0` while `.claude-plugin/plugin.json` advertised `3.0.1`. The `/plugin` resolver used the marketplace version and could install stale cached metadata alongside the correct build. Both manifests now agree on `3.0.2`.
 
 ### Recovery
 
-If `/last30days` stopped working for you, run `/plugin update last30days` then `/reload-plugins`. If `/doctor` still reports errors, uninstall and reinstall the plugin from the marketplace.
+If `/peter-wanna-know` stopped working for you, run `/plugin update peter-wanna-know` then `/reload-plugins`. If `/doctor` still reports errors, uninstall and reinstall the plugin from the marketplace.
 
 ## [3.0.1] - 2026-04-14
 
@@ -372,7 +372,7 @@ If `/last30days` stopped working for you, run `/plugin update last30days` then `
 ### Added
 
 - `.gitattributes` with `export-ignore` entries so `git archive` drops tests, docs, fixtures, assets, historical manifests, and internal skill subdirs. Mirrors Anthropic's canonical `package_skill.py` exclusions.
-- `scripts/build-skill.sh` - one-command path to produce `dist/last30days.skill` with a single top-level `last30days/` folder, defensive `=200` file check, and dirty-tree refusal.
+- `scripts/build-skill.sh` - one-command path to produce `dist/peter-wanna-know.skill` with a single top-level `peter-wanna-know/` folder, defensive `=200` file check, and dirty-tree refusal.
 - `README.md` section documenting the claude.ai skill upload workflow.
 
 ## [3.0.0] - 2026-04-11
@@ -406,9 +406,9 @@ Intelligent search, fun judge, cross-source cluster merging, single-pass compari
 
 ### Fixed
 
-- Marketplace validation: duplicate `name: last30days` collision in `skills/last30days/SKILL.md` caused strict validators to reject the plugin. Resolved by renaming the internal v3 architecture spec to `last30days-v3-spec` with `user-invocable: false`. Fixed in #214 (reported by @Cody-Coyote in #204).
-- Stale README link to the deleted `skills/last30days-v3/` path from the v3 directory rename. Fixed in #214.
-- OpenAI Codex CLI discoverability: added `.agents/skills/last30days/SKILL.md` as a real file (Codex's loader skips symlinked files) plus `.codex-plugin/plugin.json` as the namespace marker. The skill now registers as `last30days:last30days` when Codex runs in a checkout of the repo. Fixed in #219 (inspired by @Jah-yee in #153 and @dannyshmueli on X).
+- Marketplace validation: duplicate `name: peter-wanna-know` collision in `skills/peter-wanna-know/SKILL.md` caused strict validators to reject the plugin. Resolved by renaming the internal v3 architecture spec to `peter-wanna-know-v3-spec` with `user-invocable: false`. Fixed in #214 (reported by @Cody-Coyote in #204).
+- Stale README link to the deleted `skills/peter-wanna-know-v3/` path from the v3 directory rename. Fixed in #214.
+- OpenAI Codex CLI discoverability: added `.agents/skills/peter-wanna-know/SKILL.md` as a real file (Codex's loader skips symlinked files) plus `.codex-plugin/plugin.json` as the namespace marker. The skill now registers as `peter-wanna-know:peter-wanna-know` when Codex runs in a checkout of the repo. Fixed in #219 (inspired by @Jah-yee in #153 and @dannyshmueli on X).
 
 ### Contributors
 
@@ -456,7 +456,7 @@ Auto-save research briefings to the default memory directory as topic-named .md 
 
 ### Credits
 
-- [@devin_explores](https://x.com/devin_explores) -- Inspired this feature by sharing their workflow of saving every last30days run into organized .md files ([PR #51](https://github.com/mvanhorn/last30days-skill/pull/51))
+- [@devin_explores](https://x.com/devin_explores) -- Inspired this feature by sharing their workflow of saving every peter-wanna-know run into organized .md files ([PR #51](https://github.com/mvanhorn/peter-wanna-know-skill/pull/51))
 
 ## [2.9.0] - 2026-03-05
 
@@ -523,7 +523,7 @@ Three headline features: watchlists for always-on bots, YouTube transcripts as a
 
 - Open-class skill with watchlists, briefings, and history modes (SQLite-backed, FTS5 full-text search, WAL mode) (`feat(open)`)
 - YouTube as a 4th research source via yt-dlp -- search, view counts, and auto-generated transcript extraction (`feat: Add YouTube`)
-- OpenAI Codex CLI compatibility -- install to `~/.agents/skills/last30days`, invoke with `$last30days` (`feat: Add Codex CLI`)
+- OpenAI Codex CLI compatibility -- install to `~/.agents/skills/peter-wanna-know`, invoke with `$peter-wanna-know` (`feat: Add Codex CLI`)
 - Bundled X search -- vendored subset of Bird's Twitter GraphQL client (MIT, originally by @steipete), no external CLI needed (`v2.1: Bundle Bird X search`)
 - Native web search backends: Parallel AI, Brave Search, OpenRouter/Perplexity Sonar Pro (`feat(engine)`)
 - `--diagnose` flag for checking available sources and authentication status
@@ -537,9 +537,9 @@ Three headline features: watchlists for always-on bots, YouTube transcripts as a
 - Reddit JSON enrichment -- real upvotes, comments, and upvote ratio from reddit.com/.json endpoint
 - Engagement-weighted scoring: relevance 45%, recency 25%, engagement 30% (log1p dampening)
 - Model auto-selection with 7-day cache and fallback chain (gpt-4.1 -> gpt-4o -> gpt-4o-mini)
-- `--days=N` configurable lookback flag (thanks @jonthebeef, [#18](https://github.com/mvanhorn/last30days-skill/pull/18))
-- Model fallback for unverified orgs (thanks @levineam, [#16](https://github.com/mvanhorn/last30days-skill/pull/16))
-- Marketplace plugin support via `.claude-plugin/plugin.json` (inspired by @galligan, [#1](https://github.com/mvanhorn/last30days-skill/pull/1))
+- `--days=N` configurable lookback flag (thanks @jonthebeef, [#18](https://github.com/mvanhorn/peter-wanna-know-skill/pull/18))
+- Model fallback for unverified orgs (thanks @levineam, [#16](https://github.com/mvanhorn/peter-wanna-know-skill/pull/16))
+- Marketplace plugin support via `.claude-plugin/plugin.json` (inspired by @galligan, [#1](https://github.com/mvanhorn/peter-wanna-know-skill/pull/1))
 
 ### Fixed
 
@@ -548,14 +548,14 @@ Three headline features: watchlists for always-on bots, YouTube transcripts as a
 - Eager import crash in `__init__.py` that broke Codex environments
 - Reddit future timeout (same pattern as YouTube timeout bug)
 - Process cleanup on timeout/kill -- tracks child PIDs for clean shutdown
-- Windows Unicode fix for cp1252 emoji crash (thanks @JosephOIbrahim, [#17](https://github.com/mvanhorn/last30days-skill/pull/17))
+- Windows Unicode fix for cp1252 emoji crash (thanks @JosephOIbrahim, [#17](https://github.com/mvanhorn/peter-wanna-know-skill/pull/17))
 - X search returning 0 results on popular topics due to over-specific queries
 
 ### New Contributors
 
-- @JosephOIbrahim -- Windows Unicode fix ([#17](https://github.com/mvanhorn/last30days-skill/pull/17))
-- @levineam -- Model fallback for unverified orgs ([#16](https://github.com/mvanhorn/last30days-skill/pull/16))
-- @jonthebeef -- `--days=N` configurable lookback ([#18](https://github.com/mvanhorn/last30days-skill/pull/18))
+- @JosephOIbrahim -- Windows Unicode fix ([#17](https://github.com/mvanhorn/peter-wanna-know-skill/pull/17))
+- @levineam -- Model fallback for unverified orgs ([#16](https://github.com/mvanhorn/peter-wanna-know-skill/pull/16))
+- @jonthebeef -- `--days=N` configurable lookback ([#18](https://github.com/mvanhorn/peter-wanna-know-skill/pull/18))
 
 ### Credits
 
@@ -566,9 +566,9 @@ Three headline features: watchlists for always-on bots, YouTube transcripts as a
 
 Initial public release. Reddit + X search via OpenAI Responses API and xAI API.
 
-[3.0.9]: https://github.com/mvanhorn/last30days-skill/compare/v3.0.5...v3.0.9
-[2.9.1]: https://github.com/mvanhorn/last30days-skill/compare/v2.9.0...v2.9.1
-[2.9.0]: https://github.com/mvanhorn/last30days-skill/compare/v2.8.0...v2.9.0
-[2.8.0]: https://github.com/mvanhorn/last30days-skill/compare/v2.6.0...v2.8.0
-[2.1.0]: https://github.com/mvanhorn/last30days-skill/compare/v1.0.0...v2.1.0
-[1.0.0]: https://github.com/mvanhorn/last30days-skill/releases/tag/v1.0.0
+[3.0.9]: https://github.com/mvanhorn/peter-wanna-know-skill/compare/v3.0.5...v3.0.9
+[2.9.1]: https://github.com/mvanhorn/peter-wanna-know-skill/compare/v2.9.0...v2.9.1
+[2.9.0]: https://github.com/mvanhorn/peter-wanna-know-skill/compare/v2.8.0...v2.9.0
+[2.8.0]: https://github.com/mvanhorn/peter-wanna-know-skill/compare/v2.6.0...v2.8.0
+[2.1.0]: https://github.com/mvanhorn/peter-wanna-know-skill/compare/v1.0.0...v2.1.0
+[1.0.0]: https://github.com/mvanhorn/peter-wanna-know-skill/releases/tag/v1.0.0

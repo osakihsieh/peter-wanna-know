@@ -14,12 +14,12 @@ import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-V3_SCRIPT = str(REPO / "scripts" / "last30days.py")
+V3_SCRIPT = str(REPO / "scripts" / "peter-wanna-know.py")
 
 # v2.9.5 from plugin cache (main branch equivalent)
 V2_SCRIPT = str(
     Path.home()
-    / ".claude/plugins/cache/last30days/last30days/2.9.5/scripts/last30days.py"
+    / ".claude/plugins/cache/peter-wanna-know/peter-wanna-know/2.9.5/scripts/peter-wanna-know.py"
 )
 
 EVAL_TOPICS_FILE = REPO / "fixtures" / "eval_topics.json"

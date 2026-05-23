@@ -6,7 +6,7 @@ from pathlib import Path
 from lib.skill_meta import read_skill_version
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT / "skills" / "last30days"
+SKILL_ROOT = ROOT / "skills" / "peter-wanna-know"
 
 
 def _json(path: Path) -> dict:
@@ -52,7 +52,7 @@ class TestPluginContract(unittest.TestCase):
         offenders = []
         for path in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
             for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-                if "scripts/" in line and "skills/last30days/scripts/" not in line:
+                if "scripts/" in line and "skills/peter-wanna-know/scripts/" not in line:
                     offenders.append(f"{path.relative_to(ROOT)}:{line_number}: {line.strip()}")
 
         self.assertEqual([], offenders)

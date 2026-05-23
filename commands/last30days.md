@@ -4,6 +4,6 @@ argument-hint: <topic> — e.g. "nvidia earnings reaction" or "best noise cancel
 allowed-tools: [Bash, Read, Write, AskUserQuestion, WebSearch]
 ---
 
-Invoke the `last30days` skill with the user's arguments: $ARGUMENTS
+Invoke the `peter-wanna-know` skill with the user's arguments: $ARGUMENTS
 
 Use the skill's canonical pipeline (plan → retrieve → normalize → fuse → rerank → cluster → render). If the user provided no arguments, ask them for a topic before proceeding.

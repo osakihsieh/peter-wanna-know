@@ -1,11 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-# Check last30days configuration status and show appropriate welcome message.
-# Priority: .claude/last30days.env > ~/.config/last30days/.env > env vars
+# Check peter-wanna-know configuration status and show appropriate welcome message.
+# Priority: .claude/peter-wanna-know.env > ~/.config/peter-wanna-know/.env > env vars
 
-PROJECT_ENV=".claude/last30days.env"
-GLOBAL_ENV="$HOME/.config/last30days/.env"
+PROJECT_ENV=".claude/peter-wanna-know.env"
+GLOBAL_ENV="$HOME/.config/peter-wanna-know/.env"
 
 # Helper: warn if file permissions are too open
 check_perms() {
@@ -18,7 +18,7 @@ check_perms() {
   # every Linux session start and printed a false WARNING.
   perms=$(stat -c '%a' "$file" 2>/dev/null || stat -f '%Lp' "$file" 2>/dev/null || echo "")
   if [[ -n "$perms" && "$perms" != "600" && "$perms" != "400" ]]; then
-    echo "/last30days: WARNING — $file has permissions $perms (should be 600)."
+    echo "/peter-wanna-know: WARNING — $file has permissions $perms (should be 600)."
     echo "  Fix: chmod 600 $file"
   fi
 }
@@ -71,7 +71,7 @@ if [[ "${LAST30DAYS_CONFIG_DIR+x}" == "x" ]]; then
     LAST_RUN_FILE=""
   fi
 else
-  LAST_RUN_FILE="$HOME/.config/last30days/last-run.json"
+  LAST_RUN_FILE="$HOME/.config/peter-wanna-know/last-run.json"
 fi
 LAST_RUN_LINE=""
 if [[ -n "$LAST_RUN_FILE" && -f "$LAST_RUN_FILE" ]] && command -v python3 &>/dev/null; then
@@ -103,7 +103,7 @@ fi
 # If setup has never been run, show welcome message for new users
 if [[ -z "$SETUP_COMPLETE" && -z "$CONFIG_FILE" && -z "${OPENAI_API_KEY:-}" && -z "${SCRAPECREATORS_API_KEY:-}" && -z "${AUTH_TOKEN:-}" && -z "${XAI_API_KEY:-}" ]]; then
   cat <<'EOF'
-/last30days: Ready to use. Run /last30days to get started — setup takes 30 seconds.
+/peter-wanna-know: Ready to use. Run /peter-wanna-know to get started — setup takes 30 seconds.
   Research any topic across Reddit, HN, X, YouTube, Polymarket (last 30 days).
 
 Reddit, Hacker News, and Polymarket work out of the box.
@@ -159,15 +159,15 @@ fi
 
 if [[ -n "$HAS_SCRAPECREATORS" ]]; then
   # Fully configured — compact ready message
-  echo "/last30days: Ready — ${SOURCE_COUNT} sources active."
+  echo "/peter-wanna-know: Ready — ${SOURCE_COUNT} sources active."
   echo "  Research any topic across social + market + web sources (last 30 days)."
   [[ -n "$LAST_RUN_LINE" ]] && echo "$LAST_RUN_LINE"
 else
   # Setup done but missing ScrapeCreators — recommend it
-  echo "/last30days: Ready — ${SOURCE_COUNT} sources active."
+  echo "/peter-wanna-know: Ready — ${SOURCE_COUNT} sources active."
   echo "  Research any topic across social + market + web sources (last 30 days)."
   [[ -n "$LAST_RUN_LINE" ]] && echo "$LAST_RUN_LINE"
   echo "  Tip: Add ScrapeCreators for Reddit comments + TikTok + Instagram."
   echo "  100 free credits, no credit card — scrapecreators.com"
-  echo "  last30days has no affiliation with any API provider."
+  echo "  peter-wanna-know has no affiliation with any API provider."
 fi

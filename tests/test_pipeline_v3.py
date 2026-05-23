@@ -671,7 +671,7 @@ class TestXHandleFlag(unittest.TestCase):
 
     def test_cli_accepts_x_handle_flag(self):
         """build_parser() should accept --x-handle."""
-        import last30days as cli
+        import peter-wanna-know as cli
 
         parser = cli.build_parser()
         args = parser.parse_args(["test topic", "--x-handle", "elonmusk"])
@@ -679,7 +679,7 @@ class TestXHandleFlag(unittest.TestCase):
 
     def test_cli_x_handle_default_is_none(self):
         """--x-handle should default to None."""
-        import last30days as cli
+        import peter-wanna-know as cli
 
         parser = cli.build_parser()
         args = parser.parse_args(["test topic"])

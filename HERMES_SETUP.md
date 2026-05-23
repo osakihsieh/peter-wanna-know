@@ -1,6 +1,6 @@
-# Hermes Setup Guide for last30days
+# Hermes Setup Guide for peter-wanna-know
 
-This guide covers installing last30days on Hermes AI Agent.
+This guide covers installing peter-wanna-know on Hermes AI Agent.
 
 ## Prerequisites
 
@@ -11,19 +11,19 @@ This guide covers installing last30days on Hermes AI Agent.
 ## Installation
 
 ```bash
-hermes skills install mvanhorn/last30days-skill --force
+hermes skills install mvanhorn/peter-wanna-know-skill --force
 ```
 
-This pulls the latest release from GitHub and deploys to `~/.hermes/skills/research/last30days/`. `--force` reinstalls over any existing copy.
+This pulls the latest release from GitHub and deploys to `~/.hermes/skills/research/peter-wanna-know/`. `--force` reinstalls over any existing copy.
 
 ### Developer / live-edit alternative
 
 If you're hacking on the skill locally and want edits to propagate to Hermes without re-installing, symlink your working tree:
 
 ```bash
-git clone https://github.com/mvanhorn/last30days-skill.git
+git clone https://github.com/mvanhorn/peter-wanna-know-skill.git
 mkdir -p ~/.hermes/skills/research
-ln -s "$(pwd)/last30days-skill/skills/last30days" ~/.hermes/skills/research/last30days
+ln -s "$(pwd)/peter-wanna-know-skill/skills/peter-wanna-know" ~/.hermes/skills/research/peter-wanna-know
 ```
 
 ## Usage
@@ -31,13 +31,13 @@ ln -s "$(pwd)/last30days-skill/skills/last30days" ~/.hermes/skills/research/last
 In Hermes, invoke with:
 
 ```
-last30days "your research topic"
+peter-wanna-know "your research topic"
 ```
 
 Or with options:
 ```
-last30days "best mechanical keyboards 2025" --search=reddit,youtube
-last30days "AI news" --days=7 --deep
+peter-wanna-know "best mechanical keyboards 2025" --search=reddit,youtube
+peter-wanna-know "AI news" --days=7 --deep
 ```
 
 ## First Run Setup
@@ -92,20 +92,20 @@ pip install yt-dlp
 
 ### Check what's configured
 ```bash
-cd ~/.hermes/skills/research/last30days
-python3.12 scripts/last30days.py --diagnose
+cd ~/.hermes/skills/research/peter-wanna-know
+python3.12 scripts/peter-wanna-know.py --diagnose
 ```
 
 ## Updating
 
 ```bash
-hermes skills install mvanhorn/last30days-skill --force
+hermes skills install mvanhorn/peter-wanna-know-skill --force
 ```
 
 If you symlinked your working tree (developer alternative above), just `git pull` in the repo — edits propagate live, no re-install step.
 
 ## Support
 
-- Original repo: https://github.com/mvanhorn/last30days-skill
+- Original repo: https://github.com/mvanhorn/peter-wanna-know-skill
 - Hermes: https://github.com/mercurial-tf/hermes
 - Issues: Please report in the original repo

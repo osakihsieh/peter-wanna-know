@@ -17,12 +17,12 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _engine_path() -> Path:
-    return REPO_ROOT / "skills" / "last30days" / "scripts" / "last30days.py"
+    return REPO_ROOT / "skills" / "peter-wanna-know" / "scripts" / "peter-wanna-know.py"
 
 
 class PerEntitySaveFilesTests(unittest.TestCase):
     def _run(self, *argv: str, topic: str) -> tuple[subprocess.CompletedProcess, Path]:
-        save_dir = Path(tempfile.mkdtemp(prefix="last30days-test-"))
+        save_dir = Path(tempfile.mkdtemp(prefix="peter-wanna-know-test-"))
         cmd = [
             sys.executable,
             str(_engine_path()),

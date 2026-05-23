@@ -10,7 +10,7 @@ from contextlib import redirect_stderr
 from pathlib import Path
 from unittest import mock
 
-import last30days as cli
+import peter-wanna-know as cli
 
 
 class ParseCompetitorsPlanTests(unittest.TestCase):

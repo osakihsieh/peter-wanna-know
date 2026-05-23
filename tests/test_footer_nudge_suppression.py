@@ -13,7 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _engine() -> Path:
-    return REPO_ROOT / "skills" / "last30days" / "scripts" / "last30days.py"
+    return REPO_ROOT / "skills" / "peter-wanna-know" / "scripts" / "peter-wanna-know.py"
 
 
 class FooterNudgeSuppressionTests(unittest.TestCase):
@@ -29,7 +29,7 @@ class FooterNudgeSuppressionTests(unittest.TestCase):
         env = {
             **os.environ,
             "LAST30DAYS_SKIP_PREFLIGHT": "1",
-            # Skip ~/.config/last30days/.env so a contributor's saved
+            # Skip ~/.config/peter-wanna-know/.env so a contributor's saved
             # BRAVE/EXA/SERPER/PARALLEL key doesn't make grounding "available"
             # and suppress the promo we're checking for.
             "LAST30DAYS_CONFIG_DIR": "",
@@ -46,7 +46,7 @@ class FooterNudgeSuppressionTests(unittest.TestCase):
                     "AUTH_TOKEN", "CT0", "LAST30DAYS_X_BACKEND"):
             env.pop(key, None)
         # Run from a tmpdir so _find_project_env() can't walk up into any
-        # .claude/last30days.env above the repo on the contributor's machine.
+        # .claude/peter-wanna-know.env above the repo on the contributor's machine.
         with tempfile.TemporaryDirectory() as tmp:
             return subprocess.run(
                 cmd, capture_output=True, text=True, env=env, cwd=tmp,

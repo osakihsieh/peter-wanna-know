@@ -2,13 +2,13 @@
 
 The AI world reinvents itself every month. This skill keeps you current.
 
-`/last30days` researches your topic across Reddit, X, YouTube, TikTok, Instagram, Hacker News, Polymarket, GitHub, Digg, and 5+ more sources from the last 30 days, finds what the community is actually upvoting, sharing, betting on, and saying on camera, and writes you a grounded narrative with real citations.
+`/peter-wanna-know` researches your topic across Reddit, X, YouTube, TikTok, Instagram, Hacker News, Polymarket, GitHub, Digg, and 5+ more sources from the last 30 days, finds what the community is actually upvoting, sharing, betting on, and saying on camera, and writes you a grounded narrative with real citations.
 
 ## What's new in v3.3.0
 
 ### Install everywhere with one command
 
-`npx skills add mvanhorn/last30days-skill -g -y` is now the canonical install path for **every harness** — Claude Code, OpenAI Codex CLI, Cursor, Gemini CLI, GitHub Copilot, Windsurf, and 50+ other Agent Skills hosts. The skill auto-detects each harness's skills directory and symlinks in place, so edits propagate live. No more per-harness manual paths in the README.
+`npx skills add mvanhorn/peter-wanna-know-skill -g -y` is now the canonical install path for **every harness** — Claude Code, OpenAI Codex CLI, Cursor, Gemini CLI, GitHub Copilot, Windsurf, and 50+ other Agent Skills hosts. The skill auto-detects each harness's skills directory and symlinks in place, so edits propagate live. No more per-harness manual paths in the README.
 
 ### New emit mode: `--emit=html`
 
@@ -48,26 +48,26 @@ This release closes a long tail of platform-specific issues that have been accum
 
 ## Breaking change
 
-**`.codex-plugin/plugin.json` removed.** Codex native-plugin users should install via `npx skills add mvanhorn/last30days-skill` or copy the skill to `~/.codex/skills/last30days/`. The `npx skills add` path now reaches every harness uniformly.
+**`.codex-plugin/plugin.json` removed.** Codex native-plugin users should install via `npx skills add mvanhorn/peter-wanna-know-skill` or copy the skill to `~/.codex/skills/peter-wanna-know/`. The `npx skills add` path now reaches every harness uniformly.
 
 ## Install
 
 Any harness (recommended):
 
 ```
-npx skills add mvanhorn/last30days-skill -g -y
+npx skills add mvanhorn/peter-wanna-know-skill -g -y
 ```
 
 Claude Code marketplace:
 
 ```
-/plugin marketplace add mvanhorn/last30days-skill
+/plugin marketplace add mvanhorn/peter-wanna-know-skill
 ```
 
 OpenClaw:
 
 ```
-clawhub install last30days-official
+clawhub install peter-wanna-know-official
 ```
 
 Zero config. Reddit, Hacker News, Polymarket, and GitHub work immediately. Run it once and the setup wizard unlocks X, YouTube, TikTok, and more in 30 seconds.

@@ -1,6 +1,6 @@
 # Search Quality Eval
 
-`skills/last30days/scripts/evaluate_search_quality.py` is an optional local evaluation step for retrieval quality. It is not part of the user-facing runtime and does not need to run in CI by default.
+`skills/peter-wanna-know/scripts/evaluate_search_quality.py` is an optional local evaluation step for retrieval quality. It is not part of the user-facing runtime and does not need to run in CI by default.
 
 What it does:
 
@@ -18,13 +18,13 @@ What it does:
 Recommended usage:
 
 ```bash
-uv run python skills/last30days/scripts/evaluate_search_quality.py
+uv run python skills/peter-wanna-know/scripts/evaluate_search_quality.py
 ```
 
 Useful flags:
 
 ```bash
-uv run python skills/last30days/scripts/evaluate_search_quality.py \
+uv run python skills/peter-wanna-know/scripts/evaluate_search_quality.py \
   --baseline-rev origin/main \
   --candidate-rev HEAD \
   --no-default-topics \
@@ -41,7 +41,7 @@ Gemini configuration:
 
 Notes:
 
-- The script forces a clean env-based auth path when it shells out to `last30days.py`.
+- The script forces a clean env-based auth path when it shells out to `peter-wanna-know.py`.
 - It passes `XAI_API_KEY`, `OPENAI_API_KEY`, and `SCRAPECREATORS_API_KEY`, but intentionally does not pass browser-cookie X auth. That keeps evaluation runs on the popup-free path.
 - It also strips `node` from the eval `PATH` and wraps `yt-dlp` with `--ignore-config`, so older revisions do not inherit local browser-cookie config either.
 - `Jaccard` and retention are regression guards, not truth metrics.

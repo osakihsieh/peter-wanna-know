@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import unittest
 
-import last30days as cli
+import peter-wanna-know as cli
 from lib import render, schema
 
 
@@ -103,7 +103,7 @@ class RenderComparisonMultiTests(unittest.TestCase):
         self.assertIn("| Dimension | OpenAI | Anthropic | xAI |", rendered)
         # Envelope scaffolding present
         self.assertIn("EVIDENCE FOR SYNTHESIS", rendered)
-        self.assertIn("END OF last30days CANONICAL OUTPUT", rendered)
+        self.assertIn("END OF peter-wanna-know CANONICAL OUTPUT", rendered)
 
     def test_two_entity_table_has_two_columns(self):
         reports = [

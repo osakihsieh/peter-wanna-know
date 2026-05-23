@@ -31,7 +31,7 @@ jobs:
             --all-groups \
             --no-hashes \
             --format requirements.txt \
-            --output-file /tmp/last30days-requirements.txt
+            --output-file /tmp/peter-wanna-know-requirements.txt
 
       # Advisory-first: visibility before enforcement. This repo handles API keys,
       # cookies, browser tokens, and local env files, so dependency CVEs should be
@@ -39,7 +39,7 @@ jobs:
       # Set continue-on-error: false once a clean baseline run is confirmed.
       - name: Run pip-audit against locked dependencies
         continue-on-error: true
-        run: uvx --python 3.12 pip-audit -r /tmp/last30days-requirements.txt --progress-spinner=off
+        run: uvx --python 3.12 pip-audit -r /tmp/peter-wanna-know-requirements.txt --progress-spinner=off
 
   secret-scan:
     name: Secret scan

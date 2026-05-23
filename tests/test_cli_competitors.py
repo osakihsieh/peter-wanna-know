@@ -6,7 +6,7 @@ import io
 import unittest
 from contextlib import redirect_stderr
 
-import last30days as cli
+import peter-wanna-know as cli
 
 
 def _parse(*argv: str):

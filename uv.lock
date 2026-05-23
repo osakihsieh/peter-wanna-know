@@ -105,7 +105,7 @@ wheels = [
 ]
 
 [[package]]
-name = "last30days-skill"
+name = "peter-wanna-know-skill"
 version = "3.3.0"
 source = { virtual = "." }
 

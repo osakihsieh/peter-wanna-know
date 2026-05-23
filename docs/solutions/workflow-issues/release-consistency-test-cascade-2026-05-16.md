@@ -33,7 +33,7 @@ tags:
 
 ## Context
 
-A `tests/test_version_consistency.py::test_sync_cache_path_uses_skill_version` test was added to enforce that the version string embedded in `skills/last30days/scripts/sync.sh` (a hardcoded plugin-cache path segment) matched the version frontmatter in `skills/last30days/SKILL.md`. The intention was sound: the cache path had to stay in lockstep with the skill version or the sync would silently pull stale files.
+A `tests/test_version_consistency.py::test_sync_cache_path_uses_skill_version` test was added to enforce that the version string embedded in `skills/peter-wanna-know/scripts/sync.sh` (a hardcoded plugin-cache path segment) matched the version frontmatter in `skills/peter-wanna-know/SKILL.md`. The intention was sound: the cache path had to stay in lockstep with the skill version or the sync would silently pull stale files.
 
 The test worked as designed until a release shipped. At that point it turned into a cascade-failure machine:
 
@@ -58,7 +58,7 @@ def test_sync_cache_path_uses_skill_version(self) -> None:
     sync_text = (SKILL_ROOT / "scripts" / "sync.sh").read_text(encoding="utf-8")
     version = _skill_version()          # reads SKILL.md
     self.assertIn(
-        f'last30days-skill/last30days/{version}"',
+        f'peter-wanna-know-skill/peter-wanna-know/{version}"',
         sync_text,                      # asserts sync.sh contains that string
     )
 ```
@@ -73,7 +73,7 @@ Remove the hardcoded pin from `sync.sh` and compute it:
 # sync.sh — derive version from SKILL.md at runtime, no pin to maintain
 SKILL_VERSION=$(grep -m1 '^version:' "$(dirname "$0")/../SKILL.md" \
     | sed 's/version:[[:space:]]*"\([^"]*\)"/\1/')
-CACHE_PATH="last30days-skill/last30days/${SKILL_VERSION}"
+CACHE_PATH="peter-wanna-know-skill/peter-wanna-know/${SKILL_VERSION}"
 ```
 
 Now there is only one source of truth (`SKILL.md`). The test that asserted they matched becomes vacuous and should be deleted. If `SKILL.md` is wrong, the sync itself will fail loudly — which is better feedback than a CI gate on a different PR.
@@ -90,7 +90,7 @@ def test_sync_cache_path_uses_skill_version(self) -> None:
     sync_text = sync_sh.read_text(encoding="utf-8")
     version = _skill_version()
     self.assertIn(
-        f'last30days-skill/last30days/{version}"',
+        f'peter-wanna-know-skill/peter-wanna-know/{version}"',
         sync_text,
     )
 ```
@@ -155,7 +155,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT / "skills" / "last30days"
+SKILL_ROOT = ROOT / "skills" / "peter-wanna-know"
 
 
 def _skill_version() -> str:
@@ -171,7 +171,7 @@ class TestVersionConsistency(unittest.TestCase):
         sync_text = (SKILL_ROOT / "scripts" / "sync.sh").read_text(encoding="utf-8")
         version = _skill_version()          # source 1: SKILL.md frontmatter
         self.assertIn(                      # assertion: sync.sh must contain
-            f'last30days-skill/last30days/{version}"',
+            f'peter-wanna-know-skill/peter-wanna-know/{version}"',
             sync_text,                      # source 2: hardcoded string in sync.sh
         )
 ```
@@ -179,7 +179,7 @@ class TestVersionConsistency(unittest.TestCase):
 `sync.sh` contained a line like:
 
 ```bash
-PLUGIN_CACHE="$HOME/.cache/last30days-skill/last30days/3.2.0"
+PLUGIN_CACHE="$HOME/.cache/peter-wanna-know-skill/peter-wanna-know/3.2.0"
 ```
 
 When SKILL.md bumped to `3.2.1` in a release PR, `sync.sh` was updated in the same PR and CI stayed green. But every PR branched before that release still had `sync.sh` at `3.2.0`. Their CI failed immediately, with an assertion error pointing at the test, not at the release PR.
@@ -204,7 +204,7 @@ if [ -z "$SKILL_VERSION" ]; then
     exit 1
 fi
 
-PLUGIN_CACHE="$HOME/.cache/last30days-skill/last30days/${SKILL_VERSION}"
+PLUGIN_CACHE="$HOME/.cache/peter-wanna-know-skill/peter-wanna-know/${SKILL_VERSION}"
 # ... rest of sync logic
 ```
 

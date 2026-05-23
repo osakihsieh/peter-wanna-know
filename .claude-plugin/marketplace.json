@@ -1,5 +1,5 @@
 {
-  "name": "last30days-skill",
+  "name": "peter-wanna-know-skill",
   "owner": {
     "name": "Matt Van Horn",
     "url": "https://github.com/mvanhorn"
@@ -9,7 +9,7 @@
   },
   "plugins": [
     {
-      "name": "last30days",
+      "name": "peter-wanna-know",
       "description": "Research any topic across Reddit, X, YouTube, TikTok, Instagram, Hacker News, Polymarket, GitHub, and 5+ more sources. AI agent scores by upvotes, likes, and real money - not editors.",
       "version": "3.3.0",
       "author": {
@@ -18,7 +18,7 @@
       },
       "source": "./",
       "category": "productivity",
-      "homepage": "https://github.com/mvanhorn/last30days-skill"
+      "homepage": "https://github.com/mvanhorn/peter-wanna-know-skill"
     }
   ]
 }

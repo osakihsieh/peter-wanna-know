@@ -1,5 +1,5 @@
 {
-  "name": "last30days",
+  "name": "peter-wanna-know",
   "version": "3.3.0",
   "description": "Research any topic across Reddit, X, YouTube, TikTok, Instagram, Hacker News, Polymarket, GitHub, and 5+ more sources. AI agent scores by upvotes, likes, and real money - not editors.",
   "author": {
@@ -7,8 +7,8 @@
     "email": "mvanhorn@gmail.com",
     "url": "https://github.com/mvanhorn"
   },
-  "homepage": "https://github.com/mvanhorn/last30days-skill",
-  "repository": "https://github.com/mvanhorn/last30days-skill",
+  "homepage": "https://github.com/mvanhorn/peter-wanna-know-skill",
+  "repository": "https://github.com/mvanhorn/peter-wanna-know-skill",
   "license": "MIT",
   "keywords": ["research", "reddit", "twitter", "youtube", "tiktok", "instagram", "trends", "prompts", "polymarket", "github", "perplexity", "threads", "pinterest", "eli5", "hacker-news"]
 }

@@ -71,7 +71,7 @@ class EvaluatorV3Tests(unittest.TestCase):
         self.assertFalse(is_temp)
 
     def test_resolve_repo_dir_materializes_git_ref_in_temp_worktree(self):
-        fake_dir = Path("/tmp/last30days-eval-fake")
+        fake_dir = Path("/tmp/peter-wanna-know-eval-fake")
         with mock.patch.object(evaluator, "create_worktree", return_value=fake_dir) as create_worktree:
             repo_dir, is_temp = evaluator.resolve_repo_dir("HEAD~2")
         create_worktree.assert_called_once_with("HEAD~2")
@@ -138,7 +138,7 @@ class EvaluatorV3Tests(unittest.TestCase):
             )
             self.assertEqual({}, skipped)
 
-    def test_create_eval_env_and_run_last30days(self):
+    def test_create_eval_env_and_run_peter-wanna-know(self):
         with mock.patch.object(evaluator.envlib, "get_config", return_value={"OPENAI_API_KEY": "config-openai"}):
             with mock.patch.dict("os.environ", {"PATH": "/bin", "GOOGLE_API_KEY": "env-google"}, clear=False):
                 created = evaluator.create_eval_env()
@@ -148,7 +148,7 @@ class EvaluatorV3Tests(unittest.TestCase):
         self.assertEqual("", created["LAST30DAYS_CONFIG_DIR"])
 
         with mock.patch.object(evaluator.subprocess, "run", return_value=mock.Mock(returncode=0, stdout='{"topic":"x"}', stderr="")):
-            payload = evaluator.run_last30days(
+            payload = evaluator.run_peter-wanna-know(
                 Path("/tmp/repo"),
                 "topic",
                 search="reddit",
@@ -161,7 +161,7 @@ class EvaluatorV3Tests(unittest.TestCase):
 
         with mock.patch.object(evaluator.subprocess, "run", return_value=mock.Mock(returncode=2, stdout="", stderr="bad run")):
             with self.assertRaises(RuntimeError):
-                evaluator.run_last30days(
+                evaluator.run_peter-wanna-know(
                     Path("/tmp/repo"),
                     "topic",
                     search="reddit",

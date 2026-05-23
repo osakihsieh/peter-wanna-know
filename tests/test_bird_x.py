@@ -9,7 +9,7 @@ from pathlib import Path
 from lib.bird_x import parse_bird_response
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-VENDORED_BIRD = REPO_ROOT / "skills" / "last30days" / "scripts" / "lib" / "vendor" / "bird-search" / "bird-search.mjs"
+VENDORED_BIRD = REPO_ROOT / "skills" / "peter-wanna-know" / "scripts" / "lib" / "vendor" / "bird-search" / "bird-search.mjs"
 
 
 class TestBirdXEngagementZero(unittest.TestCase):
@@ -73,7 +73,7 @@ class TestVendoredBirdRuntime(unittest.TestCase):
         sweet_cookie_dir = (
             REPO_ROOT
             / "skills"
-            / "last30days"
+            / "peter-wanna-know"
             / "scripts"
             / "lib"
             / "vendor"
@@ -127,7 +127,7 @@ class TestVendoredBirdRuntime(unittest.TestCase):
                           extractCookiesFromSafari,
                           extractCookiesFromChrome,
                           extractCookiesFromFirefox,
-                        } from "./skills/last30days/scripts/lib/vendor/bird-search/lib/cookies.js";
+                        } from "./skills/peter-wanna-know/scripts/lib/vendor/bird-search/lib/cookies.js";
 
                         const payload = await Promise.all([
                           extractCookiesFromSafari(),

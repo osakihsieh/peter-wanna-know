@@ -1,0 +1,39 @@
+{
+  "name": "peter-wanna-know",
+  "version": "3.3.0",
+  "description": "Peter Wanna Know: 深度研究過去 30 天內社群（Reddit, X, PTT, Dcard, YouTube, GitHub 等）的真實動態與風向。",
+  "main": "skills/peter-wanna-know/scripts/peter-wanna-know.py",
+  "scripts": {
+    "test": "uv run pytest",
+    "add": "npx skills add . -g -y"
+  },
+  "keywords": [
+    "research",
+    "deep-research",
+    "reddit",
+    "x",
+    "twitter",
+    "youtube",
+    "ptt",
+    "dcard",
+    "tiktok",
+    "instagram",
+    "hackernews",
+    "polymarket",
+    "digg",
+    "bluesky",
+    "truthsocial",
+    "trends",
+    "recency",
+    "news",
+    "citations",
+    "multi-source",
+    "social-media",
+    "analysis",
+    "web-search",
+    "ai-skill",
+    "clawhub"
+  ],
+  "author": "mvanhorn",
+  "license": "MIT"
+}
