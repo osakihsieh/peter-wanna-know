@@ -34,7 +34,7 @@
     "ai-skill",
     "clawhub"
   ],
-  "skills": "skills/research/peter-wanna-know",
+  "skills": "skills/peter-wanna-know",
   "author": "mvanhorn",
   "license": "MIT"
 }
