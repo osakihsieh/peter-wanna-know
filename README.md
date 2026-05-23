@@ -14,11 +14,10 @@
 
 ## 安裝方式
 
-在終端機執行（需先 `git clone` 本專案）：
+在終端機執行：
 
 ```bash
-cd ~/Git/last30days-skill
-npx skills add . -g -y
+npx skills add osakihsieh/peter-wanna-know -g -y
 ```
 
 ## 使用範例
