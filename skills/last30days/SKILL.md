@@ -4,8 +4,8 @@ version: "3.3.0"
 description: "Peter Wanna Know: 深度研究過去 30 天內社群（Reddit, X, PTT, Dcard, YouTube, GitHub 等）的真實動態與風向。"
 argument-hint: 'peter-wanna-know nvidia 營收反應 | peter-wanna-know 台股風向 | peter-wanna-know 最新的 AI 影片工具'
 allowed-tools: Bash, Read, Write, AskUserQuestion, WebSearch
-homepage: https://github.com/mvanhorn/peter-wanna-know-skill
-repository: https://github.com/mvanhorn/peter-wanna-know-skill
+homepage: https://github.com/osakihsieh/peter-wanna-know
+repository: https://github.com/osakihsieh/peter-wanna-know
 author: mvanhorn
 license: MIT
 user-invocable: true
@@ -33,8 +33,8 @@ metadata:
     primaryEnv: SCRAPECREATORS_API_KEY
     files:
       - "scripts/*"
-    homepage: https://github.com/mvanhorn/peter-wanna-know-skill
-    tags:
+homepage: https://github.com/osakihsieh/peter-wanna-know
+repository: https://github.com/osakihsieh/peter-wanna-know
       - research
       - deep-research
       - reddit
