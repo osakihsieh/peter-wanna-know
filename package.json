@@ -1,8 +1,7 @@
 {
-  "name": "peter-wanna-know",
+  "name": "my-research-skill",
   "version": "3.3.0",
-  "description": "Peter Wanna Know: 深度研究過去 30 天內社群（Reddit, X, PTT, Dcard, YouTube, GitHub 等）的真實動態與風向。",
-
+  "description": "A research skill by Peter, for Peter.",
   "scripts": {
     "test": "uv run pytest",
     "add": "npx skills add . -g -y"
