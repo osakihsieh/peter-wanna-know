@@ -309,9 +309,9 @@ def create_eval_env() -> dict[str, str]:
 
 
 def run_last30days(repo_dir: Path, topic: str, *, search: str, timeout_seconds: int, quick: bool, mock: bool, env: dict[str, str]) -> dict[str, Any]:
-    engine = repo_dir / "skills" / "last30days" / "scripts" / "last30days.py"
+    engine = repo_dir / "skills" / "last30days" / "scripts" / "peter-wanna-know.py"
     if not engine.exists():
-        engine = repo_dir / "scripts" / "last30days.py"
+        engine = repo_dir / "scripts" / "peter-wanna-know.py"
     cmd = [sys.executable, str(engine), topic, "--emit=json"]
     if search:
         cmd.extend(["--search", search])

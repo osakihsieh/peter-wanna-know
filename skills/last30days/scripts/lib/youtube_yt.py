@@ -138,7 +138,7 @@ def _ytdlp_ssh_host() -> Optional[str]:
     To use a value from ~/.config/last30days/.env, export it into the
     environment before invoking the engine, e.g. in a wrapper:
         set -a; source ~/.config/last30days/.env; set +a
-        python3 last30days.py "..."
+        python3 peter-wanna-know.py "..."
     """
     host = os.environ.get("LAST30DAYS_YOUTUBE_SSH_HOST", "").strip()
     if not host:

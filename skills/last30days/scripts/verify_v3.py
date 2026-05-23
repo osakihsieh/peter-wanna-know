@@ -16,7 +16,7 @@ from pathlib import Path
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[3]
 PYTHON = sys.executable
-ENGINE = SKILL_ROOT / "scripts" / "last30days.py"
+ENGINE = SKILL_ROOT / "scripts" / "peter-wanna-know.py"
 EVALUATOR = SKILL_ROOT / "scripts" / "evaluate_search_quality.py"
 
 SMOKE_TOPIC = "openclaw skills"

@@ -807,7 +807,7 @@ def render_full(report: schema.Report) -> str:
 
     # When this Report is a per-entity sub-run from vs-mode / --competitors,
     # include the single-row Resolved Entities block so the saved file is
-    # self-describing. The artifact is populated by last30days.py's
+    # self-describing. The artifact is populated by peter-wanna-know.py's
     # _competitor_runner and _main_runner closures.
     resolved = report.artifacts.get("resolved")
     if isinstance(resolved, dict) and resolved.get("entity"):

@@ -165,7 +165,7 @@ def _run_topic(topic: dict) -> dict:
         result = subprocess.run(
             [
                 sys.executable,
-                str(SCRIPT_DIR / "last30days.py"),
+                str(SCRIPT_DIR / "peter-wanna-know.py"),
                 search_term,
                 "--emit=json",
                 "--quick",

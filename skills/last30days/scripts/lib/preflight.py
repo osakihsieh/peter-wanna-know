@@ -1,7 +1,7 @@
 """Engine-side query-quality pre-flight.
 
 Detects Class 1 (demographic shopping) keyword-trap queries and returns a
-structured REFUSE message. The caller (scripts/last30days.py main()) writes
+structured REFUSE message. The caller (scripts/peter-wanna-know.py main()) writes
 the message to stderr and exits code 2. No pipeline work runs on a doomed
 query; the model sees the REFUSE on stderr and asks the user for the
 hobbies/relationship/budget context it needs.

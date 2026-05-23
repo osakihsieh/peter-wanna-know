@@ -1,6 +1,6 @@
 # Peter Wanna Know (peter-wanna-know)
 
-> 本專案 fork 自 [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill)
+> 本專案 fork 自 [mvanhorn/peter-wanna-know-skill](https://github.com/mvanhorn/peter-wanna-know-skill)
 
 這是 Peter 專用的 AI Agent 深度研究技能。它不依賴 SEO，而是直接從「人」所在的社群平台抓取過去 30 天的真實風向與數據，並自動合成結構化的研究報告。
 
@@ -17,7 +17,7 @@
 在終端機執行（需先 `git clone` 本專案）：
 
 ```bash
-cd ~/Git/last30days-skill
+cd ~/Git/peter-wanna-know-skill
 npx skills add . -g -y
 ```
 
